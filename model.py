@@ -57,7 +57,7 @@ class CNNClassifier(torch.nn.Module):
             torch.nn.BatchNorm1d(256),
             torch.nn.ReLU(inplace=True),
             torch.nn.Dropout(p=0.5),
-            torch.nn.Linear(256, 6),
+            torch.nn.Linear(256, 26),
         )
 
     def forward(self, x):
