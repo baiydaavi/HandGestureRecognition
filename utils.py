@@ -11,24 +11,26 @@ LABEL_NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
 
 
 class SuperTuxDataset(Dataset):
-    def __init__(self, dataset_path):
+    def __init__(self, dataset_path, transform=transforms.ToTensor()):
         self.data = []
         # transform = get_transform()
         to_tensor = transforms.ToTensor()
         # to_tensor = transform
+        self.transform = transform
         with open(path.join(dataset_path, 'labels.csv'), newline='') as f:
             reader = csv.reader(f)
-            for fname, label, _ in reader:
+            for fname, label in reader:
                 if label in LABEL_NAMES:
                     image = Image.open(path.join(dataset_path, fname))
                     label_id = LABEL_NAMES.index(label)
-                    self.data.append((to_tensor(image), label_id))
+                    self.data.append((image, label_id))
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, idx):
-        return self.data[idx]
+        img, lbl = self.data[idx]
+        return self.transform(img), lbl
 
 
 def load_data(dataset_path, num_workers=0, batch_size=128, **kwargs):

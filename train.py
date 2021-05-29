@@ -2,7 +2,7 @@ import os
 
 import torch
 import torch.utils.tensorboard as tb
-
+import torchvision
 from model import CNNClassifier, save_model, load_model
 from utils import load_data, ConfusionMatrix
 
@@ -24,12 +24,18 @@ def train(args):
     optimizer = torch.optim.Adam(model.parameters(), lr=0.015, weight_decay=0.001)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', patience=20)
 
+    path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data_train'
+    valid_path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data_valid'
+    import inspect
+    transform = eval(args.transform,
+                     {k: v for k, v in inspect.getmembers(torchvision.transforms) if inspect.isclass(v)})
+    trainloader = load_data(path, transform=transform, num_workers=4)
+    validloader = load_data(valid_path, num_workers=4)
+
+
+
     if not os.path.exists('cnn.th'):
         epoch = 1
-        path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data'
-        # valid_path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data'
-        # validloader = load_data(valid_path)
-        trainloader = load_data(path)
         model.train()
 
         for ep in range(epoch):
@@ -66,7 +72,7 @@ def train(args):
 
 def check():
     model = CNNClassifier()
-    model.load_state_dict(torch.load('/Users/asinha4/UTAustin/cs342-file/homework3/homework/cnn.th'))
+    model.load_state_dict(torch.load('/cnn.th'))
     for param_tensor in model.state_dict():
         print(param_tensor, "\t", model.state_dict()[param_tensor].type())
     # print(model)
@@ -78,7 +84,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--log_dir')
-    # Put custom arguments here
+    parser.add_argument('-t', '--transform',
+                        default='Compose([ColorJitter(0.9, 0.9, 0.9, 0.1), RandomHorizontalFlip(), Resize([112,112]), ToTensor()])')
 
     args = parser.parse_args()
     train(args)
