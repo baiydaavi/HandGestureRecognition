@@ -30,6 +30,7 @@ for folder in folders:
     for file in os.listdir(folder):
         label = folder.split('/')[1]
         files.append([folder + file, label])
+print(files)
 
 df = pd.DataFrame(files, columns=['files', 'target']).to_csv('labels.csv')
 # print(df.head())

@@ -4,7 +4,7 @@ import torch
 import torch.utils.tensorboard as tb
 
 from model import CNNClassifier, save_model, load_model
-from .utils import load_data, ConfusionMatrix
+from utils import load_data, ConfusionMatrix
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 classifier = CNNClassifier().to(device)
@@ -25,10 +25,10 @@ def train(args):
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', patience=20)
 
     if not os.path.exists('cnn.th'):
-        epoch = 150
+        epoch = 1
         path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data'
-        valid_path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data'
-        validloader = load_data(valid_path)
+        # valid_path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data'
+        # validloader = load_data(valid_path)
         trainloader = load_data(path)
         model.train()
 
@@ -48,9 +48,9 @@ def train(args):
             print(f'Running epoch={ep} with accuracy on train data = {train_confusionMatrix.global_accuracy}')
             train_logger.add_scalar("accuracy", train_confusionMatrix.global_accuracy, global_step=global_step_train)
 
-            for i, validdata in enumerate(validloader, 0):
-                images, labels = validdata
-                valid_confusionMatrix.add(model(images).argmax(1), labels)
+            # for i, validdata in enumerate(validloader, 0):
+            #     images, labels = validdata
+            #     valid_confusionMatrix.add(model(images).argmax(1), labels)
 
             print(f'Running epoch={ep} with accuracy on valid data = {valid_confusionMatrix.global_accuracy}')
 
