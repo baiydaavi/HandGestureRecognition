@@ -36,7 +36,6 @@ def train(args):
 
     if not os.path.exists('cnn.th'):
         epoch = 1
-
         model.train()
 
         for ep in range(epoch):
@@ -55,9 +54,9 @@ def train(args):
             print(f'Running epoch={ep} with accuracy on train data = {train_confusionMatrix.global_accuracy}')
             train_logger.add_scalar("accuracy", train_confusionMatrix.global_accuracy, global_step=global_step_train)
 
-            for i, validdata in enumerate(validloader, 0):
-                images, labels = validdata
-                valid_confusionMatrix.add(model(images).argmax(1), labels)
+            # for i, validdata in enumerate(validloader, 0):
+            #     images, labels = validdata
+            #     valid_confusionMatrix.add(model(images).argmax(1), labels)
 
             print(f'Running epoch={ep} with accuracy on valid data = {valid_confusionMatrix.global_accuracy}')
 
