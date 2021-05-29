@@ -23,7 +23,7 @@ class SuperTuxDataset(Dataset):
                 if label in LABEL_NAMES:
                     image = Image.open(path.join(dataset_path, fname))
                     label_id = LABEL_NAMES.index(label)
-                    self.data.append((to_tensor(image), label_id))
+                    self.data.append((image, label_id))
 
     def __len__(self):
         return len(self.data)
