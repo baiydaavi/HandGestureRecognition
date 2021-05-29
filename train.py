@@ -4,7 +4,7 @@ import torch
 import torch.utils.tensorboard as tb
 
 from model import CNNClassifier, save_model, load_model
-from .utils import load_data, ConfusionMatrix
+from utils import load_data, ConfusionMatrix
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 classifier = CNNClassifier().to(device)
@@ -26,8 +26,8 @@ def train(args):
 
     if not os.path.exists('cnn.th'):
         epoch = 1
-        path = '/HGM_data_train'
-        valid_path = '/HGM_data_valid'
+        path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data_train'
+        valid_path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data_valid'
         validloader = load_data(valid_path)
         trainloader = load_data(path)
         model.train()
@@ -66,7 +66,7 @@ def train(args):
 
 def check():
     model = CNNClassifier()
-    model.load_state_dict(torch.load('/Users/asinha4/UTAustin/cs342-file/homework3/homework/cnn.th'))
+    model.load_state_dict(torch.load('/cnn.th'))
     for param_tensor in model.state_dict():
         print(param_tensor, "\t", model.state_dict()[param_tensor].type())
     # print(model)
