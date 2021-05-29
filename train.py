@@ -25,9 +25,9 @@ def train(args):
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', patience=20)
 
     if not os.path.exists('cnn.th'):
-        epoch = 150
-        path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data'
-        valid_path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data'
+        epoch = 1
+        path = '/HGM_data_train'
+        valid_path = '/HGM_data_valid'
         validloader = load_data(valid_path)
         trainloader = load_data(path)
         model.train()

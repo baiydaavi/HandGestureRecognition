@@ -18,7 +18,7 @@ class SuperTuxDataset(Dataset):
         # to_tensor = transform
         with open(path.join(dataset_path, 'labels.csv'), newline='') as f:
             reader = csv.reader(f)
-            for fname, label, _ in reader:
+            for fname, label in reader:
                 if label in LABEL_NAMES:
                     image = Image.open(path.join(dataset_path, fname))
                     label_id = LABEL_NAMES.index(label)
