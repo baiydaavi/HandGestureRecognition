@@ -24,8 +24,8 @@ def train(args):
     optimizer = torch.optim.Adam(model.parameters(), lr=0.015, weight_decay=0.001)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', patience=20)
 
-    path = '/Users/asinha4/kaggle/HandGestureRecognition'
-    valid_path = '/Users/asinha4/kaggle/HandGestureRecognition'
+    path = '/Users/asinha4/kaggle/HandGestureRecognition/cropped_train'
+    valid_path = '/Users/asinha4/kaggle/HandGestureRecognition/cropped_train'
     import inspect
     transform = eval(args.transform,
                      {k: v for k, v in inspect.getmembers(torchvision.transforms) if inspect.isclass(v)})
