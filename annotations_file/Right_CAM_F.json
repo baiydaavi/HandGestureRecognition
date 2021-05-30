@@ -1,0 +1,1273 @@
+{
+ "images": [
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P5_008.jpg",
+   "max_detection_conf": 0.997,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.997,
+     "bbox": [
+      0.2809,
+      0.1965,
+      0.6632,
+      0.3571
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.112,
+     "bbox": [
+      0.2688,
+      0.179,
+      0.6854,
+      0.3884
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.1,
+     "bbox": [
+      0.2164,
+      0.1744,
+      0.7385,
+      0.7678
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P5_007.jpg",
+   "max_detection_conf": 0.979,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.979,
+     "bbox": [
+      0.3205,
+      0,
+      0.5519,
+      0.3429
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.485,
+     "bbox": [
+      0.3157,
+      0,
+      0.5529,
+      0.346
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.13,
+     "bbox": [
+      0.1027,
+      0,
+      0.8843,
+      0.992
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P5_006.jpg",
+   "max_detection_conf": 0.854,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.854,
+     "bbox": [
+      0.04439,
+      0.002259,
+      0.9556,
+      0.2342
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.474,
+     "bbox": [
+      0,
+      0.01577,
+      1.0,
+      0.9842
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.254,
+     "bbox": [
+      0.2709,
+      0,
+      0.729,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P5_005.jpg",
+   "max_detection_conf": 0.829,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.829,
+     "bbox": [
+      0.1856,
+      0.003528,
+      0.8143,
+      0.2089
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.142,
+     "bbox": [
+      0.07402,
+      0,
+      0.9259,
+      1.0
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.101,
+     "bbox": [
+      0.01928,
+      0.01572,
+      0.9807,
+      0.9373
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P5_004.jpg",
+   "max_detection_conf": 0.7,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.7,
+     "bbox": [
+      0.3083,
+      0.1857,
+      0.6841,
+      0.3056
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.606,
+     "bbox": [
+      0.3041,
+      0.1781,
+      0.672,
+      0.3194
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.12,
+     "bbox": [
+      0.2373,
+      0.2017,
+      0.7626,
+      0.7841
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.12,
+     "bbox": [
+      0.2859,
+      0.1315,
+      0.714,
+      0.805
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P5_003.jpg",
+   "max_detection_conf": 0.878,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.878,
+     "bbox": [
+      0.3793,
+      0.2363,
+      0.613,
+      0.3006
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.623,
+     "bbox": [
+      0.3908,
+      0.2344,
+      0.5975,
+      0.3063
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.141,
+     "bbox": [
+      0.3277,
+      0.2208,
+      0.6715,
+      0.7723
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P5_002.jpg",
+   "max_detection_conf": 0.952,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.952,
+     "bbox": [
+      0.2062,
+      0.01926,
+      0.7937,
+      0.4354
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.899,
+     "bbox": [
+      0.2218,
+      0.03217,
+      0.7506,
+      0.4106
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.564,
+     "bbox": [
+      0.1978,
+      0,
+      0.7892,
+      0.9954
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.353,
+     "bbox": [
+      0.1735,
+      0.02194,
+      0.8264,
+      0.9335
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P5_001.jpg",
+   "max_detection_conf": 0.903,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.903,
+     "bbox": [
+      0.3205,
+      0.06572,
+      0.6747,
+      0.345
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.758,
+     "bbox": [
+      0.3057,
+      0.07469,
+      0.6942,
+      0.3342
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.176,
+     "bbox": [
+      0.198,
+      0.1335,
+      0.8019,
+      0.8597
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.119,
+     "bbox": [
+      0.209,
+      0.0737,
+      0.7898,
+      0.921
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P4_008.jpg",
+   "max_detection_conf": 0.997,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.997,
+     "bbox": [
+      0.3552,
+      0.4437,
+      0.534,
+      0.3912
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.416,
+     "bbox": [
+      0.3591,
+      0.438,
+      0.5202,
+      0.4079
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P4_007.jpg",
+   "max_detection_conf": 0.992,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.992,
+     "bbox": [
+      0.3768,
+      0.3545,
+      0.5837,
+      0.4088
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.931,
+     "bbox": [
+      0.3835,
+      0.3539,
+      0.5632,
+      0.4092
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P4_006.jpg",
+   "max_detection_conf": 0.967,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.967,
+     "bbox": [
+      0.1912,
+      0.302,
+      0.7929,
+      0.4509
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.853,
+     "bbox": [
+      0.1902,
+      0.2605,
+      0.7923,
+      0.6704
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.369,
+     "bbox": [
+      0.1615,
+      0.3236,
+      0.8384,
+      0.6493
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P4_005.jpg",
+   "max_detection_conf": 0.987,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.987,
+     "bbox": [
+      0.3231,
+      0.3869,
+      0.6768,
+      0.3407
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.216,
+     "bbox": [
+      0.3275,
+      0.3969,
+      0.6683,
+      0.3341
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P4_004.jpg",
+   "max_detection_conf": 0.988,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.988,
+     "bbox": [
+      0.3334,
+      0.3797,
+      0.5727,
+      0.269
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.57,
+     "bbox": [
+      0.3362,
+      0.383,
+      0.5703,
+      0.2682
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P4_003.jpg",
+   "max_detection_conf": 0.927,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.927,
+     "bbox": [
+      0.3951,
+      0.398,
+      0.5416,
+      0.2514
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.91,
+     "bbox": [
+      0.3963,
+      0.3963,
+      0.5346,
+      0.2593
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P4_002.jpg",
+   "max_detection_conf": 0.972,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.972,
+     "bbox": [
+      0.2781,
+      0.3808,
+      0.7026,
+      0.4052
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.625,
+     "bbox": [
+      0.2804,
+      0.3845,
+      0.7142,
+      0.4073
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P4_001.jpg",
+   "max_detection_conf": 0.982,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.982,
+     "bbox": [
+      0.3304,
+      0.394,
+      0.6692,
+      0.4075
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.525,
+     "bbox": [
+      0.3244,
+      0.374,
+      0.6755,
+      0.4258
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P3_008.jpg",
+   "max_detection_conf": 0.987,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.987,
+     "bbox": [
+      0.334,
+      0.05955,
+      0.584,
+      0.3628
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.12,
+     "bbox": [
+      0.3461,
+      0.05688,
+      0.5645,
+      0.3735
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P3_007.jpg",
+   "max_detection_conf": 0.96,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.96,
+     "bbox": [
+      0.3866,
+      0.0002445,
+      0.4868,
+      0.422
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.423,
+     "bbox": [
+      0.3981,
+      0,
+      0.4828,
+      0.4259
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P3_006.jpg",
+   "max_detection_conf": 0.994,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.994,
+     "bbox": [
+      0.1651,
+      0,
+      0.5359,
+      0.3602
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.14,
+     "bbox": [
+      0,
+      0,
+      1.0,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P3_005.jpg",
+   "max_detection_conf": 0.995,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.995,
+     "bbox": [
+      0.3389,
+      0.0001994,
+      0.661,
+      0.3597
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P3_004.jpg",
+   "max_detection_conf": 0.955,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.955,
+     "bbox": [
+      0.3272,
+      0,
+      0.6727,
+      0.4788
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.398,
+     "bbox": [
+      0.3158,
+      0.0008676,
+      0.6841,
+      0.4656
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.142,
+     "bbox": [
+      0.2058,
+      0.01217,
+      0.7941,
+      0.9738
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P3_003.jpg",
+   "max_detection_conf": 0.924,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.924,
+     "bbox": [
+      0.4102,
+      0.03096,
+      0.5749,
+      0.4716
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.526,
+     "bbox": [
+      0.4056,
+      0.04038,
+      0.5943,
+      0.4624
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P3_002.jpg",
+   "max_detection_conf": 0.926,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.926,
+     "bbox": [
+      0.2798,
+      0.002715,
+      0.7189,
+      0.4711
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.451,
+     "bbox": [
+      0.2248,
+      0.001286,
+      0.7751,
+      0.9732
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.296,
+     "bbox": [
+      0.2671,
+      0,
+      0.7328,
+      0.4671
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P3_001.jpg",
+   "max_detection_conf": 0.821,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.821,
+     "bbox": [
+      0.3432,
+      0.001506,
+      0.6511,
+      0.4853
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.817,
+     "bbox": [
+      0.3414,
+      0,
+      0.657,
+      0.4875
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.15,
+     "bbox": [
+      0.2662,
+      0.004733,
+      0.7337,
+      0.9817
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.11,
+     "bbox": [
+      0.2523,
+      0.01671,
+      0.7476,
+      0.9797
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P2_008.jpg",
+   "max_detection_conf": 0.739,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.739,
+     "bbox": [
+      0.4178,
+      0.1711,
+      0.5821,
+      0.36
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.705,
+     "bbox": [
+      0.415,
+      0.1609,
+      0.5817,
+      0.367
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P2_007.jpg",
+   "max_detection_conf": 0.991,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.991,
+     "bbox": [
+      0.258,
+      0.1029,
+      0.7401,
+      0.3956
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.354,
+     "bbox": [
+      0.175,
+      0.07361,
+      0.8245,
+      0.8896
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.352,
+     "bbox": [
+      0.25,
+      0.1049,
+      0.7499,
+      0.3793
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.179,
+     "bbox": [
+      0.2556,
+      0.06713,
+      0.7422,
+      0.7176
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P2_006.jpg",
+   "max_detection_conf": 0.991,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.991,
+     "bbox": [
+      0.4131,
+      0.1731,
+      0.5868,
+      0.3007
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.159,
+     "bbox": [
+      0.3844,
+      0.1713,
+      0.6151,
+      0.7992
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P2_005.jpg",
+   "max_detection_conf": 0.826,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.826,
+     "bbox": [
+      0.35,
+      0.1567,
+      0.6499,
+      0.4271
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.401,
+     "bbox": [
+      0.365,
+      0.1367,
+      0.6322,
+      0.585
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.153,
+     "bbox": [
+      0.3118,
+      0.2292,
+      0.6881,
+      0.7552
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P2_004.jpg",
+   "max_detection_conf": 0.812,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.812,
+     "bbox": [
+      0.4846,
+      0.3843,
+      0.5138,
+      0.2402
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.346,
+     "bbox": [
+      0.4968,
+      0.3815,
+      0.5031,
+      0.245
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P2_003.jpg",
+   "max_detection_conf": 0.925,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.925,
+     "bbox": [
+      0.2996,
+      0.222,
+      0.7003,
+      0.3452
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.214,
+     "bbox": [
+      0.2549,
+      0.1994,
+      0.7399,
+      0.6751
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.176,
+     "bbox": [
+      0.3074,
+      0.1619,
+      0.6791,
+      0.4927
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P2_002.jpg",
+   "max_detection_conf": 0.838,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.838,
+     "bbox": [
+      0.4324,
+      0.2701,
+      0.5675,
+      0.2955
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.378,
+     "bbox": [
+      0.427,
+      0.2688,
+      0.5644,
+      0.3138
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P2_001.jpg",
+   "max_detection_conf": 0.798,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.798,
+     "bbox": [
+      0.4161,
+      0.2754,
+      0.5838,
+      0.3583
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.486,
+     "bbox": [
+      0.4144,
+      0.2691,
+      0.5855,
+      0.3676
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P1_008.jpg",
+   "max_detection_conf": 0.994,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.994,
+     "bbox": [
+      0.4193,
+      0.09245,
+      0.577,
+      0.656
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.279,
+     "bbox": [
+      0.4454,
+      0.08475,
+      0.5545,
+      0.6681
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P1_007.jpg",
+   "max_detection_conf": 0.992,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.992,
+     "bbox": [
+      0.3075,
+      0.1271,
+      0.6823,
+      0.5891
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.643,
+     "bbox": [
+      0.3521,
+      0.1164,
+      0.6461,
+      0.6121
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.192,
+     "bbox": [
+      0.3049,
+      0.202,
+      0.695,
+      0.7898
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P1_006.jpg",
+   "max_detection_conf": 0.996,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.996,
+     "bbox": [
+      0.413,
+      0.1378,
+      0.5807,
+      0.4866
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.497,
+     "bbox": [
+      0.4415,
+      0.1293,
+      0.5584,
+      0.4941
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.134,
+     "bbox": [
+      0.4126,
+      0.1568,
+      0.5873,
+      0.8163
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P1_005.jpg",
+   "max_detection_conf": 0.941,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.941,
+     "bbox": [
+      0.4155,
+      0.2698,
+      0.5785,
+      0.3946
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.767,
+     "bbox": [
+      0.4125,
+      0.2638,
+      0.5601,
+      0.4035
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P1_004.jpg",
+   "max_detection_conf": 0.944,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.944,
+     "bbox": [
+      0.4672,
+      0.263,
+      0.5326,
+      0.3388
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.782,
+     "bbox": [
+      0.4663,
+      0.2568,
+      0.531,
+      0.3435
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P1_003.jpg",
+   "max_detection_conf": 0.954,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.954,
+     "bbox": [
+      0.3371,
+      0.1827,
+      0.6569,
+      0.4459
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.634,
+     "bbox": [
+      0.3491,
+      0.1783,
+      0.6268,
+      0.4553
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.181,
+     "bbox": [
+      0.3441,
+      0.2153,
+      0.6558,
+      0.7637
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P1_002.jpg",
+   "max_detection_conf": 0.99,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.99,
+     "bbox": [
+      0.4414,
+      0.2272,
+      0.5501,
+      0.3625
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.471,
+     "bbox": [
+      0.459,
+      0.2329,
+      0.5407,
+      0.344
+     ]
+    }
+   ]
+  },
+  {
+   "file": "drive/MyDrive/Colab_Notebooks/HandGestureRecognition/HGM_data/Right_CAM/F/P1_001.jpg",
+   "max_detection_conf": 0.962,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.962,
+     "bbox": [
+      0.4783,
+      0.2853,
+      0.5216,
+      0.3599
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.389,
+     "bbox": [
+      0.4973,
+      0.2849,
+      0.5007,
+      0.3561
+     ]
+    }
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ },
+ "info": {
+  "detection_completion_time": "2021-05-30 06:08:35",
+  "format_version": "1.0"
+ }
+}
