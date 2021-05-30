@@ -16,26 +16,28 @@ def train(args):
     loss = torch.nn.CrossEntropyLoss()
     train_logger, valid_logger = None, None
     if args.log_dir is not None:
-        train_logger = tb.SummaryWriter(path.join(args.log_dir, 'train_cnn2'), flush_secs=1)
-        valid_logger = tb.SummaryWriter(path.join(args.log_dir, 'valid_cnn2'), flush_secs=1)
+        train_logger = tb.SummaryWriter(path.join(args.log_dir, 'train_cnn'), flush_secs=1)
+        valid_logger = tb.SummaryWriter(path.join(args.log_dir, 'valid_cnn'), flush_secs=1)
 
     global_step_train = 0
     # optimizer = torch.optim.SGD(model.parameters(), lr=0.015, momentum=0.9, nesterov=True)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.015, weight_decay=0.001)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', patience=20)
 
-    path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data_train'
-    valid_path = '/Users/asinha4/kaggle/HandGestureRecognition/HGM_data_valid'
+    path = 'HGM_data_train'
+    valid_path = 'HGM_data_valid'
     import inspect
     transform = eval(args.transform,
                      {k: v for k, v in inspect.getmembers(torchvision.transforms) if inspect.isclass(v)})
+    print('loading train data...')
     trainloader = load_data(path, transform=transform, num_workers=4)
+    print('loading val data...')
     validloader = load_data(valid_path, num_workers=4)
 
 
 
     if not os.path.exists('cnn.th'):
-        epoch = 1
+        epoch = 100
         model.train()
 
         for ep in range(epoch):
@@ -85,7 +87,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--log_dir')
     parser.add_argument('-t', '--transform',
-                        default='Compose([ColorJitter(0.9, 0.9, 0.9, 0.1), RandomHorizontalFlip(), Resize([112,112]), ToTensor()])')
+                        default='Compose([ColorJitter(0.9, 0.9, 0.9, 0.1), RandomHorizontalFlip(), Resize([256,256]), ToTensor()])')
 
     args = parser.parse_args()
     train(args)

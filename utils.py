@@ -1,10 +1,14 @@
 import csv
+import cv2
 from os import path
 
 import torch
 from PIL import Image
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
+
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 LABEL_NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
                'V', 'W', 'X', 'Y', 'Z']
@@ -22,6 +26,7 @@ class SuperTuxDataset(Dataset):
             for fname, label in reader:
                 if label in LABEL_NAMES:
                     image = Image.open(path.join(dataset_path, fname))
+                    #image = cv2.imread(path.join(dataset_path, fname))
                     label_id = LABEL_NAMES.index(label)
                     self.data.append((image, label_id))
 
