@@ -14,7 +14,7 @@ LABEL_NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
                'V', 'W', 'X', 'Y', 'Z']
 
 
-class SuperTuxDataset(Dataset):
+class HandGestureRecognition(Dataset):
     def __init__(self, dataset_path, transform=transforms.ToTensor()):
         self.data = []
         # transform = get_transform()
@@ -39,7 +39,7 @@ class SuperTuxDataset(Dataset):
 
 
 def load_data(dataset_path, num_workers=0, batch_size=128, **kwargs):
-    dataset = SuperTuxDataset(dataset_path, **kwargs)
+    dataset = HandGestureRecognition(dataset_path, **kwargs)
     return DataLoader(dataset, num_workers=num_workers, batch_size=batch_size, shuffle=True, drop_last=True)
 
 
