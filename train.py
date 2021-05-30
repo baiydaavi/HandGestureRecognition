@@ -12,12 +12,12 @@ classifier = CNNClassifier().to(device)
 
 def train(args):
     from os import path
-    model = CNNClassifier2()
+    model = CNNClassifier()
     loss = torch.nn.CrossEntropyLoss()
     train_logger, valid_logger = None, None
     if args.log_dir is not None:
-        train_logger = tb.SummaryWriter(path.join(args.log_dir, 'train_cnn4'), flush_secs=1)
-        valid_logger = tb.SummaryWriter(path.join(args.log_dir, 'valid_cnn4'), flush_secs=1)
+        train_logger = tb.SummaryWriter(path.join(args.log_dir, 'train_cnn5'), flush_secs=1)
+        valid_logger = tb.SummaryWriter(path.join(args.log_dir, 'valid_cnn5'), flush_secs=1)
 
     global_step_train = 0
     # optimizer = torch.optim.SGD(model.parameters(), lr=0.015, momentum=0.9, nesterov=True)
