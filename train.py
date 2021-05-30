@@ -24,8 +24,8 @@ def train(args):
     optimizer = torch.optim.Adam(model.parameters(), lr=0.015, weight_decay=0.001)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', patience=20)
 
-    path = 'HGM_data_train'
-    valid_path = 'HGM_data_valid'
+    path = '/Users/asinha4/kaggle/HandGestureRecognition'
+    valid_path = '/Users/asinha4/kaggle/HandGestureRecognition'
     import inspect
     transform = eval(args.transform,
                      {k: v for k, v in inspect.getmembers(torchvision.transforms) if inspect.isclass(v)})
@@ -56,9 +56,9 @@ def train(args):
             print(f'Running epoch={ep} with accuracy on train data = {train_confusionMatrix.global_accuracy}')
             train_logger.add_scalar("accuracy", train_confusionMatrix.global_accuracy, global_step=global_step_train)
 
-            # for i, validdata in enumerate(validloader, 0):
-            #     images, labels = validdata
-            #     valid_confusionMatrix.add(model(images).argmax(1), labels)
+            for i, validdata in enumerate(validloader, 0):
+                images, labels = validdata
+                valid_confusionMatrix.add(model(images).argmax(1), labels)
 
             print(f'Running epoch={ep} with accuracy on valid data = {valid_confusionMatrix.global_accuracy}')
 
