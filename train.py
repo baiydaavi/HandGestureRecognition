@@ -3,7 +3,7 @@ import os
 import torch
 import torch.utils.tensorboard as tb
 import torchvision
-from model import CNNClassifier, save_model, load_model
+from model import CNNClassifier, save_model, load_model, CNNClassifier2
 from utils import load_data, ConfusionMatrix
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -16,16 +16,16 @@ def train(args):
     loss = torch.nn.CrossEntropyLoss()
     train_logger, valid_logger = None, None
     if args.log_dir is not None:
-        train_logger = tb.SummaryWriter(path.join(args.log_dir, 'train_cnn'), flush_secs=1)
-        valid_logger = tb.SummaryWriter(path.join(args.log_dir, 'valid_cnn'), flush_secs=1)
+        train_logger = tb.SummaryWriter(path.join(args.log_dir, 'train_cnn5'), flush_secs=1)
+        valid_logger = tb.SummaryWriter(path.join(args.log_dir, 'valid_cnn5'), flush_secs=1)
 
     global_step_train = 0
     # optimizer = torch.optim.SGD(model.parameters(), lr=0.015, momentum=0.9, nesterov=True)
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.015, weight_decay=0.001)
+    optimizer = torch.optim.SGD(model.parameters(), lr=1e-2, momentum=0.9, weight_decay=1e-5)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', patience=20)
 
-    path = 'HGM_data_train'
-    valid_path = 'HGM_data_valid'
+    path = '/Users/asinha4/kaggle/HandGestureRecognition/cropped_train'
+    valid_path = '/Users/asinha4/kaggle/HandGestureRecognition/cropped_train'
     import inspect
     transform = eval(args.transform,
                      {k: v for k, v in inspect.getmembers(torchvision.transforms) if inspect.isclass(v)})
@@ -33,8 +33,6 @@ def train(args):
     trainloader = load_data(path, transform=transform, num_workers=4)
     print('loading val data...')
     validloader = load_data(valid_path, num_workers=4)
-
-
 
     if not os.path.exists('cnn.th'):
         epoch = 100
@@ -56,9 +54,9 @@ def train(args):
             print(f'Running epoch={ep} with accuracy on train data = {train_confusionMatrix.global_accuracy}')
             train_logger.add_scalar("accuracy", train_confusionMatrix.global_accuracy, global_step=global_step_train)
 
-            # for i, validdata in enumerate(validloader, 0):
-            #     images, labels = validdata
-            #     valid_confusionMatrix.add(model(images).argmax(1), labels)
+            for i, validdata in enumerate(validloader, 0):
+                images, labels = validdata
+                valid_confusionMatrix.add(model(images).argmax(1), labels)
 
             print(f'Running epoch={ep} with accuracy on valid data = {valid_confusionMatrix.global_accuracy}')
 
@@ -87,7 +85,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--log_dir')
     parser.add_argument('-t', '--transform',
-                        default='Compose([ColorJitter(0.9, 0.9, 0.9, 0.1), RandomHorizontalFlip(), Resize([256,256]), ToTensor()])')
+                        default='Compose([ColorJitter(0.9, 0.9, 0.9, 0.1), RandomHorizontalFlip(p=0.9), RandomVerticalFlip(p=0.9), ToTensor()])')
 
     args = parser.parse_args()
     train(args)
