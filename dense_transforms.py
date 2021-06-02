@@ -29,7 +29,9 @@ class Compose(object):
 
 class Resize(T.Resize):
     def __call__(self, image, target):
-        return F.resize(image, self.size, self.interpolation), F.resize(target, self.size, interpolation=Image.NEAREST)
+        return F.resize(image, self.size, self.interpolation), F.resize(target,
+                                                                        self.size,
+                                                                        interpolation=Image.NEAREST)
 
 
 class RandomHorizontalFlip(object):
@@ -74,7 +76,8 @@ class ColorJitter(T.ColorJitter):
 class RandomResizedCrop(T.RandomResizedCrop):
     def __call__(self, image, target):
         i, j, h, w = self.get_params(image, self.scale, self.ratio)
-        return F.resized_crop(image, i, j, h, w, self.size, self.interpolation), \
+        return F.resized_crop(image, i, j, h, w, self.size,
+                              self.interpolation), \
                F.resized_crop(target, i, j, h, w, self.size, Image.NEAREST)
 
 
@@ -90,17 +93,24 @@ def label_to_pil_image(lbl):
     Creates a PIL pallet Image from a pytorch tensor of labels
     """
     if not (isinstance(lbl, torch.Tensor) or isinstance(lbl, np.ndarray)):
-        raise TypeError('lbl should be Tensor or ndarray. Got {}.'.format(type(lbl)))
+        raise TypeError(
+            'lbl should be Tensor or ndarray. Got {}.'.format(type(lbl)))
     elif isinstance(lbl, torch.Tensor):
         if lbl.ndimension() != 2:
-            raise ValueError('lbl should be 2 dimensional. Got {} dimensions.'.format(lbl.ndimension()))
+            raise ValueError(
+                'lbl should be 2 dimensional. Got {} dimensions.'.format(
+                    lbl.ndimension()))
         lbl = lbl.numpy()
     elif isinstance(lbl, np.ndarray):
         if lbl.ndim != 2:
-            raise ValueError('lbl should be 2 dimensional. Got {} dimensions.'.format(lbl.ndim))
+            raise ValueError(
+                'lbl should be 2 dimensional. Got {} dimensions.'.format(
+                    lbl.ndim))
 
     im = Image.fromarray(lbl.astype(np.uint8), mode='P')
-    im.putpalette([0xee, 0xee, 0xec, 0xfc, 0xaf, 0x3e, 0x2e, 0x34, 0x36, 0x20, 0x4a, 0x87, 0xa4, 0x0, 0x0] + [0] * 753)
+    im.putpalette(
+        [0xee, 0xee, 0xec, 0xfc, 0xaf, 0x3e, 0x2e, 0x34, 0x36, 0x20, 0x4a, 0x87,
+         0xa4, 0x0, 0x0] + [0] * 753)
     return im
 
 

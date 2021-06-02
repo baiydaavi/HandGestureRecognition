@@ -1,5 +1,4 @@
 import csv
-import cv2
 from os import path
 
 import torch
@@ -23,7 +22,7 @@ class HandGestureRecognition(Dataset):
         self.transform = transform
         with open(path.join(dataset_path, 'labels.csv'), newline='') as f:
             reader = csv.reader(f)
-            for fname, label in reader:
+            for _, fname, label in reader:
                 if label in LABEL_NAMES:
                     image = Image.open(path.join(dataset_path, fname))
                     #image = cv2.imread(path.join(dataset_path, fname))
@@ -38,7 +37,7 @@ class HandGestureRecognition(Dataset):
         return self.transform(img), lbl
 
 
-def load_data(dataset_path, num_workers=0, batch_size=128, **kwargs):
+def load_data(dataset_path, num_workers=0, batch_size=32, **kwargs):
     dataset = HandGestureRecognition(dataset_path, **kwargs)
     return DataLoader(dataset, num_workers=num_workers, batch_size=batch_size, shuffle=True, drop_last=True)
 
