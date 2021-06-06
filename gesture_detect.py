@@ -27,7 +27,7 @@ class Model(nn.Module):
 
 class handDetector():
 
-    def __init__(self, mode=False, maxHands=1, detectionCon=0.5, trackCon=0.5):
+    def __init__(self, mode=False, maxHands=1, detectionCon=0.8, trackCon=0.5):
         self.mode = mode
         self.maxHands = maxHands
         self.detectionCon = detectionCon
@@ -43,7 +43,7 @@ class handDetector():
 
         self.labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
                        'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-                       'W', 'X', 'Y', 'Z', 'del', 'space']
+                       'W', 'X', 'Y', 'Z', 'delete', 'space']
 
     def findHands(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -55,6 +55,35 @@ class handDetector():
                 if draw:
                     self.mpDraw.draw_landmarks(img, handLms,
                                                self.mpHands.HAND_CONNECTIONS)
+
+        return img
+
+    def findBox(self, img, draw=True):
+
+        bbox = []
+
+        if self.results.multi_hand_landmarks:
+            xList = []
+            yList = []
+            myHand = self.results.multi_hand_landmarks[0]
+            for id, lm in enumerate(myHand.landmark):
+                # print(id, lm)
+                h, w, c = img.shape
+                cx, cy = int(lm.x * w), int(lm.y * h)
+                xList.append(cx)
+                yList.append(cy)
+                # print(id, cx, cy)
+                if draw:
+                    cv2.circle(img, (cx, cy), 5, (255, 0, 255), cv2.FILLED)
+
+            xmin, xmax = min(xList), max(xList)
+            ymin, ymax = min(yList), max(yList)
+            bbox = xmin, ymin, xmax, ymax
+
+            if draw:
+                cv2.rectangle(img, (xmin - 80, ymin - 80), (xmax + 80,
+                                                            ymax + 80),
+                (0, 255, 0), 2)
 
         return img
 
@@ -89,15 +118,16 @@ def main():
     while True:
         success, img = cap.read()
         img = detector.findHands(img)
-        gesture = detector.detect_gesture()
 
+        img = detector.findBox(img)
+
+        gesture = detector.detect_gesture()
         cv2.putText(img, gesture, (20, 270), cv2.FONT_HERSHEY_SIMPLEX, 3,
                     (255, 0, 255), 3)
 
         cTime = time.time()
         fps = 1 / (cTime - pTime)
         pTime = cTime
-
         cv2.putText(img, str(int(fps)), (1200, 70), cv2.FONT_HERSHEY_PLAIN,
                     3,
                     (255, 0, 255), 3)
