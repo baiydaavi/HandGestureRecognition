@@ -15,26 +15,29 @@ LABEL_NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
 
 class HandGestureRecognition(Dataset):
     def __init__(self, dataset_path, transform=transforms.ToTensor()):
+        """
+        Hint: If you're loading (and storing) PIL images here, make sure to call image.load(),
+              to avoid an OS error for too many open files.
+        Hint: Do not store torch.Tensor's as data here, but use PIL images, torchvision.transforms expects PIL images
+              for most transformations.
+        """
         self.data = []
         # transform = get_transform()
         to_tensor = transforms.ToTensor()
         # to_tensor = transform
-        self.transform = transform
         with open(path.join(dataset_path, 'labels.csv'), newline='') as f:
             reader = csv.reader(f)
-            for _, fname, label in reader:
+            for fname, label in reader:
                 if label in LABEL_NAMES:
                     image = Image.open(path.join(dataset_path, fname))
-                    #image = cv2.imread(path.join(dataset_path, fname))
                     label_id = LABEL_NAMES.index(label)
-                    self.data.append((image, label_id))
+                    self.data.append((to_tensor(image), label_id))
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, idx):
-        img, lbl = self.data[idx]
-        return self.transform(img), lbl
+        return self.data[idx]
 
 
 def load_data(dataset_path, num_workers=0, batch_size=32, **kwargs):

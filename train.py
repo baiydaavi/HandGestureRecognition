@@ -29,9 +29,9 @@ def train(args):
                                                            patience=20)
 
     # use cropped_train for non-concatenated images
-    path = 'concat_train'
+    path = 'asl_alphabet_train'
     # use cropped_valid for non-concatenated images
-    valid_path = 'concat_valid'
+    # valid_path = 'asl_alphabet_test'
 
     import inspect
     transform = eval(args.transform,
@@ -41,11 +41,11 @@ def train(args):
     print(args.transform)
     print('loading train data...')
     trainloader = load_data(path, transform=transform, num_workers=4)
-    print('loading val data...')
-    validloader = load_data(valid_path, num_workers=4)
+    # print('loading val data...')
+    # validloader = load_data(valid_path, num_workers=4)
 
     if not os.path.exists('cnn.th'):
-        epoch = 1000
+        epoch = 20
         model.train()
 
         for ep in range(epoch):
@@ -69,17 +69,6 @@ def train(args):
                                     train_confusionMatrix.global_accuracy,
                                     global_step=global_step_train)
 
-            for i, validdata in enumerate(validloader, 0):
-                images, labels = validdata
-                valid_confusionMatrix.add(model(images).argmax(1), labels)
-
-            print(
-                f'Running epoch={ep} with accuracy on valid data = '
-                f'{valid_confusionMatrix.global_accuracy}')
-
-            valid_logger.add_scalar("accuracy",
-                                    valid_confusionMatrix.global_accuracy,
-                                    global_step=global_step_train)
 
             train_logger.add_scalar('lr', optimizer.param_groups[0]['lr'],
                                     global_step=global_step_train)
