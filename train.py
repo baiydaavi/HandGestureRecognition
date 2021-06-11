@@ -14,11 +14,11 @@ def train(args):
     model = CNNClassifier()
     loss = torch.nn.CrossEntropyLoss()
     train_logger, valid_logger = None, None
-    if args.log_dir is not None:
-        train_logger = tb.SummaryWriter(path.join(args.log_dir, 'train_cnn'),
-                                        flush_secs=1)
-        valid_logger = tb.SummaryWriter(path.join(args.log_dir, 'valid_cnn'),
-                                        flush_secs=1)
+    # if args.log_dir is not None:
+    #     train_logger = tb.SummaryWriter(path.join(args.log_dir, 'train_cnn'),
+    #                                     flush_secs=1)
+    #     valid_logger = tb.SummaryWriter(path.join(args.log_dir, 'valid_cnn'),
+    #                                     flush_secs=1)
 
     global_step_train = 0
     # optimizer = torch.optim.SGD(model.parameters(), lr=0.015, momentum=0.9,
@@ -60,18 +60,18 @@ def train(args):
                 train_loss.backward()
                 optimizer.step()
                 global_step_train += 1
-                train_logger.add_scalar("loss", train_loss,
-                                        global_step=global_step_train)
+                # train_logger.add_scalar("loss", train_loss,
+                #                         global_step=global_step_train)
             print(
                 f'Running epoch={ep} with accuracy on train data = '
                 f'{train_confusionMatrix.global_accuracy}')
-            train_logger.add_scalar("accuracy",
-                                    train_confusionMatrix.global_accuracy,
-                                    global_step=global_step_train)
+            # train_logger.add_scalar("accuracy",
+            #                         train_confusionMatrix.global_accuracy,
+            #                         global_step=global_step_train)
 
 
-            train_logger.add_scalar('lr', optimizer.param_groups[0]['lr'],
-                                    global_step=global_step_train)
+            # train_logger.add_scalar('lr', optimizer.param_groups[0]['lr'],
+            #                         global_step=global_step_train)
             scheduler.step(valid_confusionMatrix.global_accuracy)
         model.eval()
         save_model(model)

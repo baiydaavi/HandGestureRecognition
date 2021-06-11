@@ -122,7 +122,9 @@ class CNNClassifier2(torch.nn.Module):
 
     def forward(self, x):
         z = self.network((x - self.input_mean[None, :, None, None].to(x.device)) / self.input_std[None, :, None, None].to(x.device))
-        return self.classifier(z.mean(dim=[2, 3]))
+        # z = self.network(x)
+        res = self.classifier(z.mean(dim=[2, 3]))
+        return res
 
 model_factory = {
     'cnn': CNNClassifier
