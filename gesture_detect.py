@@ -27,7 +27,7 @@ class Model(nn.Module):
 
 class handDetector():
 
-    def __init__(self, mode=False, maxHands=1, detectionCon=0.8, trackCon=0.5):
+    def __init__(self, mode=False, maxHands=1, detectionCon=0.7, trackCon=0.5):
         self.mode = mode
         self.maxHands = maxHands
         self.detectionCon = detectionCon
@@ -39,7 +39,7 @@ class handDetector():
         self.mpDraw = mp.solutions.drawing_utils
 
         self.model = Model()
-        self.model.load_state_dict(torch.load('landmark_model_100.pth'))
+        self.model.load_state_dict(torch.load('landmark_model_300.pth'))
 
         self.labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
                        'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
@@ -119,7 +119,7 @@ def main():
         success, img = cap.read()
         img = detector.findHands(img)
 
-        img = detector.findBox(img)
+        #img = detector.findBox(img)
 
         gesture = detector.detect_gesture()
         cv2.putText(img, gesture, (20, 270), cv2.FONT_HERSHEY_SIMPLEX, 3,
