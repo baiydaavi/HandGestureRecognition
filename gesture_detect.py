@@ -1,6 +1,7 @@
 import cv2
 import mediapipe as mp
 import time
+import pickle
 
 import numpy as np
 
@@ -8,21 +9,28 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+class DNN_Landmark_Model(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.hidden1 = nn.Linear(42, 256)
+    self.hidden2 = nn.Linear(256, 128)
+    self.hidden3 = nn.Linear(128, 64)
+    self.output = nn.Linear(64, 28)
+    self.dropout1 = nn.Dropout(0.25)
+    self.dropout2 = nn.Dropout(0.5)
 
-class Model(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.hidden1 = nn.Linear(42, 256)
-        self.hidden2 = nn.Linear(256, 128)
-        self.output = nn.Linear(128, 28)
-
-    def forward(self, x):
-        x = self.hidden1(x)
-        x = F.relu(x)
-        x = self.hidden2(x)
-        x = F.relu(x)
-        x = self.output(x)
-        return x
+  def forward(self, x):
+    x = self.hidden1(x)
+    x = F.relu(x)
+    x = self.dropout2(x)
+    x = self.hidden2(x)
+    x = F.relu(x)
+    x = self.dropout2(x)
+    x = self.hidden3(x)
+    x = F.relu(x)
+    x = self.dropout1(x)
+    x = self.output(x)
+    return x
 
 
 class handDetector():
@@ -38,12 +46,18 @@ class handDetector():
                                         self.detectionCon, self.trackCon)
         self.mpDraw = mp.solutions.drawing_utils
 
-        self.model = Model()
-        self.model.load_state_dict(torch.load('landmark_model_300.pth'))
-
         self.labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
                        'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
                        'W', 'X', 'Y', 'Z', 'delete', 'space']
+
+        # deep network landmark model
+        self.model = DNN_Landmark_Model()
+        self.model.load_state_dict(torch.load(
+            'trained_models/DNN_landmarks_model.pth'))
+        self.model.eval()
+
+        # logistic regression landmark model
+        #self.model = pickle.load(open('LogReg_landmarks_model.sav', 'rb'))
 
     def findHands(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -104,8 +118,14 @@ class handDetector():
                 lm_array.append(lm.x - ref_x)
                 lm_array.append(lm.y - ref_y)
             lm_array = np.array(lm_array)
+
+            # deep network landmark model
             output = self.model(torch.tensor(lm_array).type(torch.FloatTensor))
             gesture_id = np.argmax(output.detach().numpy())
+
+            # logistic regression landmark model
+            #gesture_id = self.model.predict(lm_array.reshape(1,-1))[0]
+
             gesture = self.labels[gesture_id]
 
         return gesture
@@ -118,8 +138,6 @@ def main():
     while True:
         success, img = cap.read()
         img = detector.findHands(img)
-
-        #img = detector.findBox(img)
 
         gesture = detector.detect_gesture()
         cv2.putText(img, gesture, (20, 270), cv2.FONT_HERSHEY_SIMPLEX, 3,

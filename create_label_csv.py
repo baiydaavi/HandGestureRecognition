@@ -43,11 +43,9 @@ with mp_hands.Hands(
                         data.append(landmark.y - ref_y)
                 files.append(data)
                 num_img += 1
-        #     break
-        # break
+
         print(label, num_img)
 
-# print(files[0:5])
 
 data_columns = ['files', 'target', 'label']
 
