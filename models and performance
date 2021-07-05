@@ -1,0 +1,12 @@
+no transforms - model's accuracy on test data -> 99 but didnt work with 99% accuracy on realtime video
+transforms - 
+    ColorJitter(0.9, 0.9, 0.9, 0.1), RandomHorizontalFlip(p=0.9),RandomVerticalFlip(p=0.9), 
+                                           RandomGrayscale(p=1.0) - 68% on test data
+
+ColorJitter(0.9, 0.9, 0.9, 0.1), RandomGrayscale(p=1.0)   - test accuracy 99% modelnme -transforms
+                                 try model at epoch 5 and epoch 7 
+
+ColorJitter(0.9, 0.9, 0.9, 0.1), RandomGrayscale(p=1.0) , randomhorizontalflip(p=0.5) 
+
+
+

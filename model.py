@@ -1,5 +1,6 @@
 import torch
 import torch.nn.functional as F
+from torchvision import datasets, transforms, models
 
 
 class CNNClassifier(torch.nn.Module):
@@ -58,7 +59,7 @@ class CNNClassifier(torch.nn.Module):
             torch.nn.BatchNorm1d(256),
             torch.nn.ReLU(inplace=True),
             torch.nn.Dropout(p=0.5),
-            torch.nn.Linear(256, 26),
+            torch.nn.Linear(256, 29),
         )
 
     def forward(self, x):
@@ -107,7 +108,7 @@ class CNNClassifier2(torch.nn.Module):
         def forward(self, x):
             return F.relu(self.b3(self.c3(F.relu(self.b2(self.c2(F.relu(self.b1(self.c1(x)))))))) + self.skip(x))
 
-    def __init__(self, layers=[16, 32, 64, 128], n_output_channels=26, kernel_size=3):
+    def __init__(self, layers=[16, 32, 64, 128], n_output_channels=29, kernel_size=3):
         super().__init__()
         self.input_mean = torch.Tensor([0.3521554, 0.30068502, 0.28527516])
         self.input_std = torch.Tensor([0.18182722, 0.18656468, 0.15938024])
@@ -125,6 +126,37 @@ class CNNClassifier2(torch.nn.Module):
         # z = self.network(x)
         res = self.classifier(z.mean(dim=[2, 3]))
         return res
+
+class mobilenet(torch.nn.Module):
+    backbone = 'mobilenet_v2'
+    addLayers = False
+    if backbone == 'resnet50':
+        model = models.resnet50(pretrained=True)
+        for param in model.parameters():
+            param.requires_grad = False
+        if addLayers:
+            model.fc = torch.nn.Sequential(torch.nn.Linear(2048, 1024),
+                                     torch.nn.ReLU(),
+                                     torch.nn.Dropout(0.2),
+                                     torch.nn.Linear(1024, 29),
+                                     torch.nn.LogSoftmax(dim=1)
+                                     )
+        else:
+            model.fc = torch.nn.Linear(2048, 29)
+    elif backbone == 'mobilenet_v2':
+        model = models.mobilenet_v2(pretrained=True)
+        for param in model.parameters():
+            param.requires_grad = False
+        if addLayers:
+            model.classifier = torch.nn.Sequential(torch.nn.Linear(1280, 1024),
+                                             torch.nn.ReLU(),
+                                             torch.nn.Dropout(0.2),
+                                             torch.nn.Linear(1024, 29),
+                                             torch.nn.LogSoftmax(dim=1)
+                                             )
+        else:
+            model.classifier = torch.nn.Linear(1280, 29)
+    # print(model)
 
 model_factory = {
     'cnn': CNNClassifier

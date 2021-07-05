@@ -1,6 +1,9 @@
 import cv2
 import mediapipe as mp
 import time
+from PIL import Image
+from datetime import datetime
+import time
 
 import numpy as np
 
@@ -8,9 +11,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from model import CNNClassifier
+from model import CNNClassifier, mobilenet
 
-
+# now = datetime.now()
 class Model(nn.Module):
     def __init__(self):
         super().__init__()
@@ -41,15 +44,16 @@ class handDetector():
         self.mpDraw = mp.solutions.drawing_utils
 
         self.model = CNNClassifier()
+        # self.model = mobilenet()
 
-        self.model = torch.load('final_sl.pth')
+        self.model = torch.load('transforms7.pth')
         self.model.eval()
 
         self.labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
                        'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
                        'W', 'X', 'Y', 'Z', 'delete', 'space']
 
-    def findHands(self, img, draw=True):
+    def findHands(self, img, draw=False):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.hands.process(imgRGB)
         # print(results.multi_hand_landmarks)
@@ -77,22 +81,21 @@ class handDetector():
                 xList.append(cx)
                 yList.append(cy)
                 # print(id, cx, cy)
-                if draw:
-                    cv2.circle(img, (cx, cy), 5, (255, 0, 255), cv2.FILLED)
+                # if draw:
+                #     cv2.circle(img, (cx, cy), 5, (255, 0, 255), cv2.FILLED)
 
             xmin, xmax = min(xList), max(xList)
             ymin, ymax = min(yList), max(yList)
             bbox = xmin, ymin, xmax, ymax
-            self.cropped_image = img[xmin - 80:xmax + 80, ymin - 80:ymax + 80]
+            self.cropped_image = img[ymin-80:ymax+80, xmin-80:xmax+80]
 
             if draw:
                 cv2.rectangle(img, (xmin - 80, ymin - 80), (xmax + 80,
-                                                            ymax + 80),
-                (0, 255, 0), 2)
+                                                            ymax + 80), (0, 255, 0), 2)
 
         return img
 
-    def detect_gesture(self):
+    def detect_gesture(self, bool = FC):
 
         if not self.results.multi_hand_landmarks:
             gesture = 'Nothing'
@@ -108,10 +111,14 @@ class handDetector():
                     ref_y = lm.y
                 lm_array.append(lm.x - ref_x)
                 lm_array.append(lm.y - ref_y)
-            lm_array = np.array(lm_array)
             print("shape of cropped image ", self.cropped_image.shape)
             _image = np.array(self.cropped_image)
-            image = torch.from_numpy(_image)
+            imgRGB = cv2.cvtColor(_image, cv2.COLOR_BGR2RGB)
+
+            im = Image.fromarray(imgRGB)
+            im.save("output/video_output{}.jpeg".format(str(time.time() * 10)))
+
+            image = torch.from_numpy(imgRGB)
 
             image = image[np.newaxis, :]
             image = image.permute(0, 3, 1, 2)
