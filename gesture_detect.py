@@ -95,7 +95,7 @@ class handDetector():
 
         return img
 
-    def detect_gesture(self, bool = FC):
+    def detect_gesture(self):
 
         if not self.results.multi_hand_landmarks:
             gesture = 'Nothing'
