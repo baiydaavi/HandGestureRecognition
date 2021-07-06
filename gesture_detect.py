@@ -46,7 +46,7 @@ class handDetector():
         self.model = CNNClassifier()
         # self.model = mobilenet()
 
-        self.model = torch.load('transforms7.pth')
+        self.model = torch.load('mobile_net18.pth')
         self.model.eval()
 
         self.labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
