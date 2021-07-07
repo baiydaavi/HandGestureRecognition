@@ -43,10 +43,11 @@ class handDetector():
                                         self.detectionCon, self.trackCon)
         self.mpDraw = mp.solutions.drawing_utils
 
-        self.model = CNNClassifier()
-        # self.model = mobilenet()
+        # self.model = CNNClassifier()
+        self.model = mobilenet()
 
-        self.model = torch.load('mobile_net18.pth')
+        self.model = torch.load('sl_recognition_6_0.3_0.907.pth', map_location='cpu')
+        # self.model.cpu()
         self.model.eval()
 
         self.labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
