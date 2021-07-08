@@ -4,6 +4,7 @@ import time
 from PIL import Image
 from datetime import datetime
 import time
+from torchvision import datasets, transforms, models
 
 import numpy as np
 
@@ -11,7 +12,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from model import CNNClassifier, mobilenet
+from model import CNNClassifier, mobilenet, SimpleCNN
+
 
 # now = datetime.now()
 class Model(nn.Module):
@@ -43,8 +45,10 @@ class handDetector():
                                         self.detectionCon, self.trackCon)
         self.mpDraw = mp.solutions.drawing_utils
 
-        # self.model = CNNClassifier()
+        # self.model = SimpleCNN()
         self.model = mobilenet()
+        # self.model.load_state_dict(torch.load('asl_model.pth', map_location='cpu'))
+        # self.model.load_state_dict(torch.load('sl_recognition_6_0.3_0.907.pth', map_location='cpu'))
 
         self.model = torch.load('sl_recognition_6_0.3_0.907.pth', map_location='cpu')
         # self.model.cpu()
@@ -113,17 +117,23 @@ class handDetector():
                 lm_array.append(lm.x - ref_x)
                 lm_array.append(lm.y - ref_y)
             print("shape of cropped image ", self.cropped_image.shape)
+
             _image = np.array(self.cropped_image)
             imgRGB = cv2.cvtColor(_image, cv2.COLOR_BGR2RGB)
 
             im = Image.fromarray(imgRGB)
-            im.save("output/video_output{}.jpeg".format(str(time.time() * 10)))
+            im.save("output/video_output{}.jpg".format(str(time.time() * 100)))
+            train_transforms = transforms.Compose(
+                [transforms.Resize((224, 224)),transforms.ToTensor(), ])
 
-            image = torch.from_numpy(imgRGB)
+            # image = torch.from_numpy(imgRGB)
+            imgRGB = transforms.ToPILImage()(imgRGB)
+            image = train_transforms(imgRGB)
+            print("shape after transforms", image.shape)
 
-            image = image[np.newaxis, :]
-            image = image.permute(0, 3, 1, 2)
-            image = image.type(torch.FloatTensor)
+            image = image[None, :]
+            # image = image.permute(0, 3, 1, 2)
+            # image = image.type(torch.FloatTensor)
             print("shape after processing", image.shape)
             # img = torch.tensor(image).type(torch.FloatTensor)
             output = self.model(image)

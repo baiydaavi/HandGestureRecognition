@@ -1,4 +1,5 @@
 import torch
+import torch.nn
 import torch.nn.functional as F
 from torchvision import datasets, transforms, models
 
@@ -157,6 +158,34 @@ class mobilenet(torch.nn.Module):
         else:
             model.classifier = torch.nn.Linear(1280, 29)
     # print(model)
+
+class SimpleCNN(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.layer1 = torch.nn.Sequential(
+            torch.nn.Conv2d(3, 16, kernel_size=5, stride=1, padding=2),
+            torch.nn.BatchNorm2d(16),
+            torch.nn.LeakyReLU(0.1))
+
+        self.layer2 = torch.nn.Sequential(
+            torch.nn.Conv2d(16, 32, kernel_size=5, stride=1, padding=2),
+            torch.nn.BatchNorm2d(32),
+            torch.nn.LeakyReLU(0.1),
+            torch.nn.MaxPool2d(kernel_size=2, stride=2))
+
+        self.fc = torch.nn.Sequential(
+            torch.nn.Linear(32 * 100 * 100, 81),
+            torch.nn.Dropout(0.2),
+            torch.nn.BatchNorm1d(81),
+            torch.nn.LeakyReLU(81, 29))
+
+    def forward(self, x):
+        x = self.layer1(x)
+        x = self.layer2(x)
+        x = x.view(-1, 32 * 100 * 100)
+        x = self.fc(x)
+        return x
+
 
 model_factory = {
     'cnn': CNNClassifier
