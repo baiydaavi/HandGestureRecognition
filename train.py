@@ -4,10 +4,53 @@ import torch.utils.tensorboard as tb
 import torchvision
 from model import CNNClassifier, save_model, load_model
 from utils import load_data, ConfusionMatrix
-
+import numpy as np
+import torch
+from torch import nn
+from torch import optim
+import torch.nn.functional as F
+from torchvision import datasets, transforms, models
+from torch.utils.data.sampler import SubsetRandomSampler
+import os
+from tqdm import tqdm
+from time import sleep
+import cv2
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 classifier = CNNClassifier().to(device)
 
+
+def load_split_train_test(datadir, batch_size, valid_size=.2):
+
+
+    train_transforms = transforms.Compose([transforms.Resize((224, 224)), transforms.ColorJitter(0.9, 0.9, 0.9, 0.1),
+                                       transforms.GaussianBlur(kernel_size=501), transforms.ToTensor(), ])
+    test_transforms = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor(), ])
+
+    train_data = datasets.ImageFolder(datadir, transform=train_transforms)
+    test_data = datasets.ImageFolder(datadir, transform=test_transforms)
+
+    num_train = len(train_data)
+    indices = list(range(num_train))
+    split = int(np.floor(valid_size * num_train))
+    np.random.shuffle(indices)
+
+    train_idx, test_idx = indices[split:], indices[:split]
+    train_sampler = SubsetRandomSampler(train_idx)
+    test_sampler = SubsetRandomSampler(test_idx)
+
+    trainloader = torch.utils.data.DataLoader(train_data, sampler=train_sampler, batch_size=batch_size)
+    testloader = torch.utils.data.DataLoader(test_data, sampler=test_sampler, batch_size=batch_size)
+
+    return trainloader, testloader
+
+batch_size = 32
+trainloader, testloader = load_split_train_test(data_dir, batch_size, .18)
+print("Train Size:", len(trainloader) * batch_size, ", No of bacthes:", len(trainloader))
+print("Test Size:", len(testloader) * batch_size, ", No of bacthes:", len(testloader))
+print("Classes:", trainloader.dataset.classes)
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print("device:", device)
 
 def train(args):
     from os import path

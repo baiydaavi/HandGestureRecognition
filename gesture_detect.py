@@ -119,6 +119,7 @@ class handDetector():
             print("shape of cropped image ", self.cropped_image.shape)
 
             _image = np.array(self.cropped_image)
+            #check if this improves or worsens performance
             imgRGB = cv2.cvtColor(_image, cv2.COLOR_BGR2RGB)
 
             im = Image.fromarray(imgRGB)
