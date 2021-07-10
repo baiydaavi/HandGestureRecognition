@@ -50,7 +50,7 @@ class handDetector():
         # self.model.load_state_dict(torch.load('asl_model.pth', map_location='cpu'))
         # self.model.load_state_dict(torch.load('sl_recognition_6_0.3_0.907.pth', map_location='cpu'))
 
-        self.model = torch.load('sl_recognition_6_0.3_0.907.pth', map_location='cpu')
+        self.model = torch.load('cnn/sl_recognition_6_0.3_0.907.pth', map_location='cpu')
         # self.model.cpu()
         self.model.eval()
 
@@ -96,7 +96,7 @@ class handDetector():
 
             if draw:
                 cv2.rectangle(img, (xmin - 80, ymin - 80), (xmax + 80,
-                                                            ymax + 80), (0, 255, 0), 2)
+                                                            ymax + 80), (255, 0, 0), 2)
 
         return img
 
