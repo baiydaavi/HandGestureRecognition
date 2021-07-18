@@ -1,13 +1,9 @@
 import time
 import pickle
-
 import numpy as np
-
 import cv2
 import mediapipe as mp
-
 import torch
-
 from model import DNN_Landmark_Model
 
 class handDetector():
