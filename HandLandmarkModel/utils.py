@@ -1,55 +1,4 @@
-import csv
-from os import path
-
 import torch
-from PIL import Image
-from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms
-
-from PIL import ImageFile
-ImageFile.LOAD_TRUNCATED_IMAGES = True
-
-LABEL_NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
-               'V', 'W', 'X', 'Y', 'Z']
-
-
-class HandGestureRecognition(Dataset):
-    def __init__(self, dataset_path, transform=transforms.ToTensor()):
-        self.data = []
-        # transform = get_transform()
-        to_tensor = transforms.ToTensor()
-        # to_tensor = transform
-        self.transform = transform
-        with open(path.join(dataset_path, 'labels.csv'), newline='') as f:
-            reader = csv.reader(f)
-            for _, fname, label in reader:
-                if label in LABEL_NAMES:
-                    image = Image.open(path.join(dataset_path, fname))
-                    #image = cv2.imread(path.join(dataset_path, fname))
-                    label_id = LABEL_NAMES.index(label)
-                    self.data.append((image, label_id))
-
-    def __len__(self):
-        return len(self.data)
-
-    def __getitem__(self, idx):
-        img, lbl = self.data[idx]
-        return self.transform(img), lbl
-
-
-def load_data(dataset_path, num_workers=0, batch_size=32, **kwargs):
-    dataset = HandGestureRecognition(dataset_path, **kwargs)
-    return DataLoader(dataset, num_workers=num_workers, batch_size=batch_size, shuffle=True, drop_last=True)
-
-
-def accuracy(outputs, labels):
-    outputs_idx = outputs.max(1)[1].type_as(labels)
-    return outputs_idx.eq(labels).float().mean()
-
-
-def _one_hot(x, n):
-    return (x.view(-1, 1) == torch.arange(n, dtype=x.dtype, device=x.device)).int()
-
 
 class ConfusionMatrix(object):
     def _make(self, preds, labels):
@@ -98,24 +47,4 @@ class ConfusionMatrix(object):
     @property
     def per_class(self):
         return self.matrix / (self.matrix.sum(1, keepdims=True) + 1e-5)
-#
-# if __name__ == '__main__':
-#     dataset = SuperTuxDataset('dense_data/train', transform=dense_transforms.Compose(
-#         [dense_transforms.RandomHorizontalFlip(), dense_transforms.ToTensor()]))
-#     from pylab import show, imshow, subplot, axis
-#
-#     for i in range(15):
-#         im, lbl = dataset[i]
-#         subplot(5, 6, 2 * i + 1)
-#         imshow(F.to_pil_image(im))
-#         axis('off')
-#         subplot(5, 6, 2 * i + 2)
-#         imshow(dense_transforms.label_to_pil_image(lbl))
-#         axis('off')
-#     show()
-#     import numpy as np
-#
-#     c = np.zeros(5)
-#     for im, lbl in dataset:
-#         c += np.bincount(lbl.view(-1), minlength=len(DENSE_LABEL_NAMES))
-#     print(100 * c / np.sum(c))
+
