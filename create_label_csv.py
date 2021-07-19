@@ -2,7 +2,6 @@ import os
 import cv2
 import mediapipe as mp
 import pandas as pd
-from tqdm import tqdm
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
