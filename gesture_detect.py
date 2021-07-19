@@ -6,8 +6,11 @@ import mediapipe as mp
 import torch
 from model import DNN_Landmark_Model
 
-class handDetector():
 
+class handDetector():
+    """
+    A hand detector class.
+    """
     def __init__(self, mode=False, maxHands=1, detectionCon=0.7, trackCon=0.5):
         self.mode = mode
         self.maxHands = maxHands
@@ -33,6 +36,12 @@ class handDetector():
         # self.model = pickle.load(open('LogReg_landmarks_model.sav', 'rb'))
 
     def findHands(self, img, draw=True):
+        """
+        Find hand landmarks
+        :param img: image containing hand
+        :param draw: True if landmark points are drawn
+        :return: input image with or without landmarks drawn
+        """
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.hands.process(imgRGB)
 
@@ -45,9 +54,12 @@ class handDetector():
         return img
 
     def findBox(self, img, draw=True):
-
-        bbox = []
-
+        """
+        Find bounding box around the hand
+        :param img: image containing hand
+        :param draw: True if bounding box is drawn
+        :return: input image with or without bounding box
+        """
         if self.results.multi_hand_landmarks:
             xList = []
             yList = []
@@ -64,7 +76,6 @@ class handDetector():
 
             xmin, xmax = min(xList), max(xList)
             ymin, ymax = min(yList), max(yList)
-            bbox = xmin, ymin, xmax, ymax
 
             if draw:
                 cv2.rectangle(img, (xmin - 80, ymin - 80), (xmax + 80,
@@ -74,59 +85,84 @@ class handDetector():
         return img
 
     def detect_gesture(self):
-
+        """
+        Find gesture using hand landmarks
+        :return: gesture label
+        """
         if not self.results.multi_hand_landmarks:
-            gesture = 'Nothing'
+            gesture = 'nothing'
 
         else:
             lm_array = []
             myHand = self.results.multi_hand_landmarks[0]
+
+            # get landmark points relative to landmark 0
             for id, lm in enumerate(myHand.landmark):
                 if id != 0:
                     pass
                 else:
                     ref_x = lm.x
                     ref_y = lm.y
+
                 lm_array.append(lm.x - ref_x)
                 lm_array.append(lm.y - ref_y)
+
             lm_array = np.array(lm_array)
 
+            # scale the detected landmark points in x and y direction
             lm_array[0::2] = (lm_array[0::2] - np.min(lm_array[0::2])) / (
-                        np.max(
-                            lm_array[0::2]) - np.min(lm_array[0::2]))
+                    np.max(
+                        lm_array[0::2]) - np.min(lm_array[0::2]))
             lm_array[1::2] = (lm_array[1::2] - np.min(lm_array[1::2])) / (
                     np.max(
                         lm_array[1::2]) - np.min(lm_array[1::2]))
-            # deep network landmark model
+
+            # predict gesture using deep network landmark model
             output = self.model(torch.tensor(lm_array).type(torch.FloatTensor))
             gesture_id = np.argmax(output.detach().numpy())
 
-            # logistic regression landmark model
+            # predict gesture using logistic regression landmark model
             # gesture_id = self.model.predict(lm_array.reshape(1,-1))[0]
 
+            # convert detected gesture to label
             gesture = self.labels[gesture_id]
 
         return gesture
 
 
 def main():
-    pTime = 0
+    alpha = 1.0  # Contrast control (1.0-3.0)
+    beta = 60  # Brightness control (0-100)
     cap = cv2.VideoCapture(0)
     detector = handDetector()
+
     while True:
+        # read image from video
         success, img = cap.read()
+
+        # find hand landmarks
         img = detector.findHands(img)
 
+        # find gesture
         gesture = detector.detect_gesture()
-        cv2.putText(img, gesture, (20, 270), cv2.FONT_HERSHEY_SIMPLEX, 3,
-                    (255, 0, 255), 3)
 
-        cTime = time.time()
-        fps = 1 / (cTime - pTime)
-        pTime = cTime
-        cv2.putText(img, str(int(fps)), (1200, 70), cv2.FONT_HERSHEY_PLAIN,
-                    3,
-                    (255, 0, 255), 3)
+        # Select the predicted gesture image to show as reference
+        overlay = cv2.resize(cv2.imread(f'reference_images/'
+                                        f'{gesture}_test.jpg'), (200, 200))
+        overlay = cv2.convertScaleAbs(overlay, alpha=alpha, beta=beta)
+
+        # Select the region in the background where we want to add the image
+        # and add the gesture using cv2.addWeighted()
+        added_image = cv2.addWeighted(img[0:200, -200:, :], 0,
+                                      overlay, 1, 0)
+
+        # Change the region with the reference gesture image
+        img[0:200, -200:] = added_image
+
+        # Add the gesture as text
+        cv2.putText(img, gesture, (img.shape[1]-120, 230),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1,
+                    (255, 255, 255), 3)
 
         cv2.imshow("Image", img)
         cv2.waitKey(1)
