@@ -45,12 +45,11 @@ class handDetector():
                                         self.detectionCon, self.trackCon)
         self.mpDraw = mp.solutions.drawing_utils
 
-        # self.model = SimpleCNN()
         self.model = mobilenet()
         # self.model.load_state_dict(torch.load('asl_model.pth', map_location='cpu'))
         # self.model.load_state_dict(torch.load('sl_recognition_6_0.3_0.907.pth', map_location='cpu'))
 
-        self.model = torch.load('cnn/sl_recognition_6_0.3_0.907.pth', map_location='cpu')
+        self.model = torch.load('cnn/sl_recognition_6_0.3_0.907_mobilenet.pth', map_location='cpu')
         # self.model.cpu()
         self.model.eval()
 
