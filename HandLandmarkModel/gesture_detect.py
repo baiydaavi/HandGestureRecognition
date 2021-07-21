@@ -1,17 +1,20 @@
-import time
-import pickle
-import numpy as np
 import cv2
 import mediapipe as mp
+import numpy as np
 import torch
-from model import DNN_Landmark_Model
+from PIL import Image
+from torchvision import transforms
+
+from model import DNN_Landmark_Model, CNN
 
 
 class handDetector():
     """
     A hand detector class.
+    :param : model = DNN_Landmark_Model / Mobile_Net / ResNet to choose the backbone model
     """
-    def __init__(self, mode=False, maxHands=1, detectionCon=0.7, trackCon=0.5):
+
+    def __init__(self, mode=False, maxHands=1, detectionCon=0.7, trackCon=0.5, model="DNN_Landmark_Model"):
         self.mode = mode
         self.maxHands = maxHands
         self.detectionCon = detectionCon
@@ -27,9 +30,21 @@ class handDetector():
                        'W', 'X', 'Y', 'Z', 'delete', 'space']
 
         # deep network landmark model
-        self.model = DNN_Landmark_Model()
-        self.model.load_state_dict(torch.load(
-            'trained_models/Normalized_DNN_landmarks_model.pth'))
+        if model == "DNN_Landmark_Model":
+            self.model = DNN_Landmark_Model()
+            self.model.load_state_dict(torch.load(
+                'trained_landmarks_models/normalized_DNN_landmarks_model.pth'))
+        elif model == "Mobile_Net":
+            self.model = CNN(backbone="mobilenet_v2")
+            self.model = torch.load(
+                'trained_cnn_models/sl_recognition_6_0.3_0.907_mobilenet.pth',
+                map_location='cpu')
+        elif model == "ResNet":
+            self.model = CNN(backbone="resnet50")
+            self.model = torch.load(
+                'trained_cnn_models/sl_recognition_25_0.15_0.952_resnet.pth',
+                map_location='cpu')
+
         self.model.eval()
 
         # logistic regression landmark model
@@ -77,6 +92,8 @@ class handDetector():
             xmin, xmax = min(xList), max(xList)
             ymin, ymax = min(yList), max(yList)
 
+            self.cropped_image = img[ymin - 80:ymax + 80, xmin - 80:xmax + 80]
+
             if draw:
                 cv2.rectangle(img, (xmin - 80, ymin - 80), (xmax + 80,
                                                             ymax + 80),
@@ -84,53 +101,74 @@ class handDetector():
 
         return img
 
-    def detect_gesture(self):
+    def detect_gesture(self, model="landmark"):
         """
         Find gesture using hand landmarks
+        :param: model = landmark / CNN to choose the base model
         :return: gesture label
         """
         if not self.results.multi_hand_landmarks:
             gesture = 'nothing'
 
         else:
-            lm_array = []
-            myHand = self.results.multi_hand_landmarks[0]
+            if (model == "landmark"):
+                lm_array = []
+                myHand = self.results.multi_hand_landmarks[0]
 
-            # get landmark points relative to landmark 0
-            for id, lm in enumerate(myHand.landmark):
-                if id != 0:
-                    pass
-                else:
-                    ref_x = lm.x
-                    ref_y = lm.y
+                # get landmark points relative to landmark 0
+                for id, lm in enumerate(myHand.landmark):
+                    if id != 0:
+                        pass
+                    else:
+                        ref_x = lm.x
+                        ref_y = lm.y
 
-                lm_array.append(lm.x - ref_x)
-                lm_array.append(lm.y - ref_y)
+                    lm_array.append(lm.x - ref_x)
+                    lm_array.append(lm.y - ref_y)
 
-            lm_array = np.array(lm_array)
+                lm_array = np.array(lm_array)
 
-            # scale the detected landmark points in x and y direction
-            lm_array[0::2] = (lm_array[0::2] - np.min(lm_array[0::2])) / (
-                    np.max(
-                        lm_array[0::2]) - np.min(lm_array[0::2]))
-            lm_array[1::2] = (lm_array[1::2] - np.min(lm_array[1::2])) / (
-                    np.max(
-                        lm_array[1::2]) - np.min(lm_array[1::2]))
+                # scale the detected landmark points in x and y direction
+                lm_array[0::2] = (lm_array[0::2] - np.min(lm_array[0::2])) / (
+                        np.max(
+                            lm_array[0::2]) - np.min(lm_array[0::2]))
+                lm_array[1::2] = (lm_array[1::2] - np.min(lm_array[1::2])) / (
+                        np.max(
+                            lm_array[1::2]) - np.min(lm_array[1::2]))
 
-            # predict gesture using deep network landmark model
-            output = self.model(torch.tensor(lm_array).type(torch.FloatTensor))
-            gesture_id = np.argmax(output.detach().numpy())
+                # predict gesture using deep network landmark model
+                output = self.model(torch.tensor(lm_array).type(torch.FloatTensor))
+                gesture_id = np.argmax(output.detach().numpy())
+
+            elif (model == "CNN"):
+                print("shape of cropped image ", self.cropped_image.shape)
+                _image = np.array(self.cropped_image)
+                imgRGB = cv2.cvtColor(_image, cv2.COLOR_BGR2RGB)
+                im = Image.fromarray(imgRGB)
+                # im.save("output/video_output{}.jpg".format(str(time.time() * 100))) SAVE IMAGES TO TEST
+
+                # resize the image and convert to tensor
+                train_transforms = transforms.Compose(
+                    [transforms.Resize((224, 224)), transforms.ToTensor(), ])
+                imgRGB = transforms.ToPILImage()(imgRGB)
+                image = train_transforms(imgRGB)
+
+                # add a dimension to image for batch
+                image = image[None, :]
+                # image = image.permute(0, 3, 1, 2)
+                # image = image.type(torch.FloatTensor)
+                output = self.model(image)
+                gesture_id = np.argmax(output.detach().numpy())
 
             # predict gesture using logistic regression landmark model
             # gesture_id = self.model.predict(lm_array.reshape(1,-1))[0]
 
             # convert detected gesture to label
             gesture = self.labels[gesture_id]
-
         return gesture
 
 
-def main():
+def run_hand_gesture_recognition(model):
     alpha = 1.0  # Contrast control (1.0-3.0)
     beta = 60  # Brightness control (0-100)
     cap = cv2.VideoCapture(0)
@@ -144,7 +182,8 @@ def main():
         img = detector.findHands(img)
 
         # find gesture
-        gesture = detector.detect_gesture()
+        # params: model="landmark" / model="CNN"
+        gesture = detector.detect_gesture(model=model)
 
         # Select the predicted gesture image to show as reference
         overlay = cv2.resize(cv2.imread(f'reference_images/'
@@ -160,7 +199,7 @@ def main():
         img[0:200, -200:] = added_image
 
         # Add the gesture as text
-        cv2.putText(img, gesture, (img.shape[1]-120, 230),
+        cv2.putText(img, gesture, (img.shape[1] - 120, 230),
                     cv2.FONT_HERSHEY_SIMPLEX, 1,
                     (255, 255, 255), 3)
 
@@ -169,4 +208,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    run_hand_gesture_recognition(model="landmark")
