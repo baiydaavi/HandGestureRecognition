@@ -5,7 +5,7 @@ import torch
 from PIL import Image
 from torchvision import transforms
 
-from HandLandmarkModel.model import DNN_Landmark_Model, CNN
+from model import DNN_Landmark_Model, CNN
 
 
 class handDetector():
@@ -33,16 +33,16 @@ class handDetector():
         if model == "DNN_Landmark_Model":
             self.model = DNN_Landmark_Model()
             self.model.load_state_dict(torch.load(
-                'HandLandmarkModel/trained_landmarks_models/Normalized_DNN_landmarks_model.pth'))
+                'trained_landmarks_models/normalized_DNN_landmarks_model.pth'))
         elif model == "Mobile_Net":
             self.model = CNN(backbone="mobilenet_v2")
             self.model = torch.load(
-                'HandLandmarkModel/trained_cnn_models/sl_recognition_6_0.3_0.907_mobilenet.pth',
+                'trained_cnn_models/sl_recognition_6_0.3_0.907_mobilenet.pth',
                 map_location='cpu')
         elif model == "ResNet":
             self.model = CNN(backbone="resnet50")
             self.model = torch.load(
-                'HandLandmarkModel/trained_cnn_models/sl_recognition_25_0.15_0.952-resnet.pth',
+                'trained_cnn_models/sl_recognition_25_0.15_0.952_resnet.pth',
                 map_location='cpu')
 
         self.model.eval()
@@ -92,13 +92,12 @@ class handDetector():
             xmin, xmax = min(xList), max(xList)
             ymin, ymax = min(yList), max(yList)
 
-            bounding_box = xmin, ymin, xmax, ymax
             self.cropped_image = img[ymin - 80:ymax + 80, xmin - 80:xmax + 80]
 
             if draw:
                 cv2.rectangle(img, (xmin - 80, ymin - 80), (xmax + 80,
                                                             ymax + 80),
-                              (255, 0, 0), 2)
+                              (0, 255, 0), 2)
 
         return img
 
