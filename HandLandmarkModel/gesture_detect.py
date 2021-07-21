@@ -37,12 +37,12 @@ class handDetector():
         elif model == "Mobile_Net":
             self.model = CNN(backbone="mobilenet_v2")
             self.model = torch.load(
-                'HandLandmarkModel/trained_landmarks_models/sl_recognition_6_0.3_0.907_mobilenet.pth',
+                'HandLandmarkModel/trained_cnn_models/sl_recognition_6_0.3_0.907_mobilenet.pth',
                 map_location='cpu')
         elif model == "ResNet":
             self.model = CNN(backbone="resnet50")
             self.model = torch.load(
-                'HandLandmarkModel/trained_landmarks_models/sl_recognition_5_0.247_0.925_mobilenet.pth',
+                'HandLandmarkModel/trained_cnn_models/sl_recognition_25_0.15_0.952-resnet.pth',
                 map_location='cpu')
 
         self.model.eval()
