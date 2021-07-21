@@ -14,12 +14,12 @@ class handDetector():
     :param : model = DNN_Landmark_Model / Mobile_Net / ResNet to choose the backbone model
     """
 
-    def __init__(self, mode=False, maxHands=1, detectionCon=0.7, trackCon=0.5, model="DNN_Landmark_Model"):
+    def __init__(self, model_used="mobilenet", mode=False, maxHands=1, detectionCon=0.7, trackCon=0.5):
         self.mode = mode
         self.maxHands = maxHands
         self.detectionCon = detectionCon
         self.trackCon = trackCon
-
+        self.model = model_used
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands(self.mode, self.maxHands,
                                         self.detectionCon, self.trackCon)
@@ -30,16 +30,17 @@ class handDetector():
                        'W', 'X', 'Y', 'Z', 'delete', 'space']
 
         # deep network landmark model
-        if model == "DNN_Landmark_Model":
+        if model_used == "landmark":
             self.model = DNN_Landmark_Model()
             self.model.load_state_dict(torch.load(
                 'trained_landmarks_models/normalized_DNN_landmarks_model.pth'))
-        elif model == "Mobile_Net":
+        elif model_used == "mobilenet":
+            print("Came here")
             self.model = CNN(backbone="mobilenet_v2")
             self.model = torch.load(
-                'trained_cnn_models/sl_recognition_6_0.3_0.907_mobilenet.pth',
+                '/Users/asinha4/kaggle/HandGestureRecognition/HandLandmarkModel/trained_cnn_models/sl_recognition_5_0.247_0.925_mobilenet.pth',
                 map_location='cpu')
-        elif model == "ResNet":
+        elif model_used == "resnet":
             self.model = CNN(backbone="resnet50")
             self.model = torch.load(
                 'trained_cnn_models/sl_recognition_25_0.15_0.952_resnet.pth',
@@ -86,8 +87,8 @@ class handDetector():
                 xList.append(cx)
                 yList.append(cy)
                 # print(id, cx, cy)
-                if draw:
-                    cv2.circle(img, (cx, cy), 5, (255, 0, 255), cv2.FILLED)
+                # if draw:
+                #     cv2.circle(img, (cx, cy), 5, (255, 0, 255), cv2.FILLED)
 
             xmin, xmax = min(xList), max(xList)
             ymin, ymax = min(yList), max(yList)
@@ -104,7 +105,7 @@ class handDetector():
     def detect_gesture(self, model="landmark"):
         """
         Find gesture using hand landmarks
-        :param: model = landmark / CNN to choose the base model
+        :param: model = landmark / resnet / mobilenet to choose the base model
         :return: gesture label
         """
         if not self.results.multi_hand_landmarks:
@@ -140,7 +141,7 @@ class handDetector():
                 output = self.model(torch.tensor(lm_array).type(torch.FloatTensor))
                 gesture_id = np.argmax(output.detach().numpy())
 
-            elif (model == "CNN"):
+            elif (model == "mobilenet" or model == "resnet"):
                 print("shape of cropped image ", self.cropped_image.shape)
                 _image = np.array(self.cropped_image)
                 imgRGB = cv2.cvtColor(_image, cv2.COLOR_BGR2RGB)
@@ -168,22 +169,26 @@ class handDetector():
         return gesture
 
 
-def run_hand_gesture_recognition(model):
+def run_hand_gesture_recognition(train_model):
     alpha = 1.0  # Contrast control (1.0-3.0)
     beta = 60  # Brightness control (0-100)
     cap = cv2.VideoCapture(0)
-    detector = handDetector()
+    detector = handDetector(train_model)
 
     while True:
         # read image from video
         success, img = cap.read()
 
         # find hand landmarks
-        img = detector.findHands(img)
+        if(train_model == "landmark"):
+            img = detector.findHands(img)
+        elif(train_model == "mobilenet"):
+            img = detector.findHands(img, draw=False)
+            img = detector.findBox(img)
 
         # find gesture
-        # params: model="landmark" / model="CNN"
-        gesture = detector.detect_gesture(model=model)
+        # params: model="landmark" / model="mobilenet" / model = "resnet"
+        gesture = detector.detect_gesture(model=train_model)
 
         # Select the predicted gesture image to show as reference
         overlay = cv2.resize(cv2.imread(f'reference_images/'
@@ -208,4 +213,4 @@ def run_hand_gesture_recognition(model):
 
 
 if __name__ == "__main__":
-    run_hand_gesture_recognition(model="landmark")
+    run_hand_gesture_recognition(train_model="mobilenet")
