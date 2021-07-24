@@ -29,7 +29,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-In this project, we build two machine learning models to detect american sign language in real time.
+In this project, we build machine learning models to detect american sign language in real time.
 
 ### Built With
 
