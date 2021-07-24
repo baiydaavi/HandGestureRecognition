@@ -11,10 +11,11 @@ from model import DNN_Landmark_Model, CNN
 class handDetector():
     """
     A hand detector class.
-    :param : model = DNN_Landmark_Model / Mobile_Net / ResNet to choose the backbone model
+    :param : model = landmark/mobilenet/resnet to choose the inference model
     """
 
-    def __init__(self, model_used="mobilenet", mode=False, maxHands=1, detectionCon=0.7, trackCon=0.5):
+    def __init__(self, model_used="mobilenet", mode=False, maxHands=1,
+                 detectionCon=0.7, trackCon=0.6):
         self.mode = mode
         self.maxHands = maxHands
         self.detectionCon = detectionCon
@@ -33,12 +34,14 @@ class handDetector():
         if model_used == "landmark":
             self.model = DNN_Landmark_Model()
             self.model.load_state_dict(torch.load(
-                'trained_landmarks_models/normalized_DNN_landmarks_model.pth'))
+                'trained_landmarks_models/Normalized_DNN_landmarks_model.pth'))
+
+        # CNN model
         elif model_used == "mobilenet":
             print("Came here")
             self.model = CNN(backbone="mobilenet_v2")
             self.model = torch.load(
-                '/Users/asinha4/kaggle/HandGestureRecognition/HandLandmarkModel/trained_cnn_models/sl_recognition_5_0.247_0.925_mobilenet.pth',
+                'trained_cnn_models/sl_recognition_5_0.247_0.925_mobilenet.pth',
                 map_location='cpu')
         elif model_used == "resnet":
             self.model = CNN(backbone="resnet50")
@@ -105,7 +108,7 @@ class handDetector():
     def detect_gesture(self, model="landmark"):
         """
         Find gesture using hand landmarks
-        :param: model = landmark / resnet / mobilenet to choose the base model
+        :param: model = landmark/mobilenet/resnet to choose the inference model
         :return: gesture label
         """
         if not self.results.multi_hand_landmarks:
@@ -170,6 +173,11 @@ class handDetector():
 
 
 def run_hand_gesture_recognition(train_model):
+    """
+    Run gesture recognition
+    :param train_model: landmark/mobilenet/resnet to choose the inference model
+    :return: None
+    """
     alpha = 1.0  # Contrast control (1.0-3.0)
     beta = 60  # Brightness control (0-100)
     cap = cv2.VideoCapture(0)
@@ -182,7 +190,7 @@ def run_hand_gesture_recognition(train_model):
         # find hand landmarks
         if(train_model == "landmark"):
             img = detector.findHands(img)
-        elif(train_model == "mobilenet"):
+        else:
             img = detector.findHands(img, draw=False)
             img = detector.findBox(img)
 
@@ -213,4 +221,4 @@ def run_hand_gesture_recognition(train_model):
 
 
 if __name__ == "__main__":
-    run_hand_gesture_recognition(train_model="mobilenet")
+    run_hand_gesture_recognition(train_model="landmark")
