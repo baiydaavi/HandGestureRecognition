@@ -28,17 +28,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-In this project, we build two machine learning models to detect american sign language in real time.
-<details open="open">
-  <ol>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#contributing">Convolutional Neural Networks</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
-  </ol>
-</details>
+In this project, we build machine learning models to detect american sign language in real time.
 
 ### Built With
 
