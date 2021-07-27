@@ -30,6 +30,15 @@
 ## About The Project
 
 In this project, we build two machine learning models to detect american sign language in real time.
+<details open="open">
+  <ol>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contributing">Convolutional Neural Networks</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
+  </ol>
+</details>
 
 ### Built With
 
@@ -84,7 +93,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 
 * Avinash - aavinash@ucdavis.edu - [@Linkedin](https://www.linkedin.com/in/baidyaavinash/)
-* Ankita Sinha
+* Ankita Sinha - asinha4@uci.edu -  [@Linkedin](https://www.linkedin.com/in/anki08/)
 
 Project Link: [https://github.com/baiydaavi/HandGestureRecognition](https://github.com/baiydaavi/HandGestureRecognition)
 

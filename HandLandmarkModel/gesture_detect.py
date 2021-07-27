@@ -182,7 +182,7 @@ def run_hand_gesture_recognition(train_model):
         # find hand landmarks
         if(train_model == "landmark"):
             img = detector.findHands(img)
-        elif(train_model == "mobilenet"):
+        elif(train_model == "mobilenet" or train_model == 'resnet'):
             img = detector.findHands(img, draw=False)
             img = detector.findBox(img)
 
@@ -213,4 +213,4 @@ def run_hand_gesture_recognition(train_model):
 
 
 if __name__ == "__main__":
-    run_hand_gesture_recognition(train_model="mobilenet")
+    run_hand_gesture_recognition(train_model="resnet")
