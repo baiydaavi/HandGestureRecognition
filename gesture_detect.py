@@ -221,4 +221,11 @@ def run_hand_gesture_recognition(train_model):
 
 
 if __name__ == "__main__":
-    run_hand_gesture_recognition(train_model="landmark")
+    import argparse
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('-m', '--model', choices=['landmark', 'mobilenet', 'resnet'], default='landmark')
+
+    args = parser.parse_args()
+    run_hand_gesture_recognition(args)
