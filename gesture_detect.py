@@ -228,4 +228,4 @@ if __name__ == "__main__":
     parser.add_argument('-m', '--model', choices=['landmark', 'mobilenet', 'resnet'], default='landmark')
 
     args = parser.parse_args()
-    run_hand_gesture_recognition(args)
+    run_hand_gesture_recognition(train_model=args.model)
