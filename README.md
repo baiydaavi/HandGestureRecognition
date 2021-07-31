@@ -71,8 +71,22 @@ Any contributions you make are **greatly appreciated**. Please follow the steps 
 4. Push to the Branch 
 5. Open a Pull Request
 
+<!-- Execution -->
+## Execution
 
+To execute the model please run
+python gesture_detect.py 
 
+The model takes 1 args - model. You can choose amongst 3 models
+1. Landmark model
+2. MobileNet
+3. ResNet
+
+Landmark is selected by default and has the highest accuracy. 100% !! 
+
+To run the script using model of your choice run either 
+1. python gesture_detect.py -m mobilenet 
+2. python gesture_detect.py --model mobilenet
 <!-- LICENSE -->
 ## License
 
