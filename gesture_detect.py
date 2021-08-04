@@ -141,7 +141,8 @@ class handDetector():
                             lm_array[1::2]) - np.min(lm_array[1::2]))
 
                 # predict gesture using deep network landmark model
-                output = self.model(torch.tensor(lm_array).type(torch.FloatTensor))
+                output = self.model(
+                    torch.tensor(lm_array).type(torch.FloatTensor))
                 gesture_id = np.argmax(output.detach().numpy())
 
             elif (model == "mobilenet" or model == "resnet"):
@@ -149,7 +150,8 @@ class handDetector():
                 _image = np.array(self.cropped_image)
                 imgRGB = cv2.cvtColor(_image, cv2.COLOR_BGR2RGB)
                 im = Image.fromarray(imgRGB)
-                # im.save("output/video_output{}.jpg".format(str(time.time() * 100))) SAVE IMAGES TO TEST
+                # im.save("output/video_output{}.jpg".format(str(time.time()
+                # * 100))) SAVE IMAGES TO TEST
 
                 # resize the image and convert to tensor
                 train_transforms = transforms.Compose(
@@ -188,7 +190,7 @@ def run_hand_gesture_recognition(train_model):
         success, img = cap.read()
 
         # find hand landmarks
-        if(train_model == "landmark"):
+        if (train_model == "landmark"):
             img = detector.findHands(img)
         else:
             img = detector.findHands(img, draw=False)
@@ -225,7 +227,9 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-m', '--model', choices=['landmark', 'mobilenet', 'resnet'], default='landmark')
+    parser.add_argument('-m', '--model',
+                        choices=['landmark', 'mobilenet', 'resnet'],
+                        default='landmark')
 
     args = parser.parse_args()
     run_hand_gesture_recognition(train_model=args.model)
