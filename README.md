@@ -67,19 +67,19 @@ Files:
 <!-- Execution -->
 ## Execution
 
-To execute the model please run
-python gesture_detect.py 
+To execute the model please run - 
+python gesture_detect.py.
 
-The model takes 1 args - model. You can choose amongst 3 models
-1. Landmark model
-2. MobileNet
-3. ResNet
+The model takes 1 argument - model. You can choose amongst 3 model options
+1. 'landmark' - denoting the hand landmark model.
+2. 'mobilenet' - denoting the CNN model using MobileNet backbone.
+3. 'resnet' - denoting the CNN model using ResNet backbone.
 
-Landmark is selected by default and has the highest accuracy. It works close to 100% of the time!! 
+'landmark' is selected by default and has the highest accuracy. It works close to 100% of the time!! 
 
 To run the script using model of your choice run either 
-1. python gesture_detect.py -m mobilenet 
-2. python gesture_detect.py --model mobilenet
+1. python gesture_detect.py -m model_name 
+2. python gesture_detect.py --model model_name
 
 https://user-images.githubusercontent.com/14941840/126101775-9fd5b9e1-2927-447f-9263-f1a8b8dc9671.mp4
 
