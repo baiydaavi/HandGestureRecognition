@@ -45,9 +45,23 @@ This is an example of how to list things you need to use the software and how to
 
 <!-- Organization -->
 ## Organization
-<!--
+This repository is organized into the following folders and files:-
 
--->
+Folders:
+1. asl_alphabet_test - This folder contains the test images that were created by us to test the model on entirely unseen images.
+2. asl_alphabet_train - This folder contains the train images that we obtained from kaggle.
+3. reference_images - This folder contains the reference images for each sign for the purpose of showing a reference image for a given sign during real-time inference.
+4. trained_cnn_models - This folder contains the trained CNN models.
+5. trained_landmarks_models - This folder contains the trained hand landmark models.
+
+Files:
+1. ColabCNNTrain.ipynb - This colab file is used to train the CNN model.
+2. ColabDNNLandmarksTrain.ipynb - This colab file is used to train the hand landmark model.
+3. asl_recog.mov - This is a movie showing the real-time performance of the hand landmark model.
+4. create_landmark_csv.py - This file is used to generate the hand landmarks data for both training and testing images.
+5. gesture_detect.py - This file is used to run real-time inference using either the hand landmark model or the CNN model.
+6. model.py - This file contains the model architecture for all the models.
+7. utils.py - This file contains the utility functions required by the models.
 
 
 <!-- Execution -->
@@ -61,7 +75,7 @@ The model takes 1 args - model. You can choose amongst 3 models
 2. MobileNet
 3. ResNet
 
-Landmark is selected by default and has the highest accuracy. 100% !! 
+Landmark is selected by default and has the highest accuracy. It works close to 100% of the time!! 
 
 To run the script using model of your choice run either 
 1. python gesture_detect.py -m mobilenet 
