@@ -11,7 +11,7 @@
         <li><a href="#cnn-model">CNN Model</a></li>
       </ul>
     </li>
-    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#requirements">Requirements</a></li>
     <li><a href="#organization">Organization</a></li>
     <li><a href="#execution">Execution</a></li>
     <li><a href="#contributing">Contributing</a></li>
@@ -32,8 +32,8 @@ In this project, we build machine learning models to detect american sign langua
 ### CNN Model
  
 
-<!-- Prerequisites -->
-## Prerequisites
+<!-- Requirements -->
+## Requirements
 <!--
 This is an example of how to list things you need to use the software and how to install them.
 * npm
