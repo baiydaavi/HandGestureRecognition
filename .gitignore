@@ -137,3 +137,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /.gitattributes
+/check_test.py
+/DNN_hyperparameter_tuning.ipynb
