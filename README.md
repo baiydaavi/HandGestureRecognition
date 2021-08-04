@@ -88,8 +88,6 @@ Any contributions you make are **greatly appreciated**. Please follow the steps 
 * Avinash - aavinash@ucdavis.edu - [@Linkedin](https://www.linkedin.com/in/baidyaavinash/)
 * Ankita Sinha - asinha4@uci.edu -  [@Linkedin](https://www.linkedin.com/in/anki08/)
 
-Project Link: [https://github.com/baiydaavi/HandGestureRecognition](https://github.com/baiydaavi/HandGestureRecognition)
-
 
 <!-- LICENSE -->
 ## License
