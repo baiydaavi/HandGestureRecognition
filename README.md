@@ -32,8 +32,8 @@ In this project, we build machine learning models to detect american sign langua
 ### CNN Model
 The CNN model can be invoked by
 <ol>
-    <li>`python gesture_detect.py -m mobilenet` to invoke the mobilenet model.</li>
-    <li>`python gesture_detect.py -m resnet` to invoke the mobilenet model.</li>
+    <li>python gesture_detect.py -m mobilenet - to invoke the mobilenet model.</li>
+    <li>python gesture_detect.py -m resnet - to invoke the mobilenet model.</li>
 </ol>
 <p>You would be asked for permission to allow opencv2 to access your camera. Once you give the permission, your camera window will open up. MediaPipe then detects the hands and creates a bounding box around the hand. 
 You can start creating the American Sign language symbols now.</p> 
