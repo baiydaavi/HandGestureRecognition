@@ -30,6 +30,18 @@ In this project, we build machine learning models to detect american sign langua
 ### Hand Landmark Model
 
 ### CNN Model
+The CNN model can be invoked by
+<ol>
+    <li>python gesture_detect.py -m mobilenet to invoke the mobilenet model.</li>
+    <li>python gesture_detect.py -m resnet to invoke the mobilenet model.</li>
+</ol>
+<p>You would be asked for permission to allow opencv2 to access your camera. Once you give the permission, your camera window will open up. MediaPipe then detects the hands and creates a bounding box around the hand. 
+You can start creating the American Sign language symbols now.</p> 
+<p>We then capture the image frame wise and crop it around the bounding box. This image is sent to the trained MobileNet or ResNet Model according to the argument selected, returning the predicted result.
+<p>We have used MobileNet and ResNet pre-trained models.</p>
+<p>MobileNet has an accuracy of 96% on the test set and ResNet has an accuracy of 93% on the test set. We have used a learning rate of 0.001 for both the models with SGD as Optimiser. The transforms used are - transforms.ColorJitter(brightness = 0.9, contrast = 0.9, saturation = 0.9, hue = 0.1). 
+In real-time these models were able to detect 19 signs from 26 alphabet signs. The main issue in the detection was due to the change in background during real time detection making the model perform badly.</p>
+
  
 
 <!-- Requirements -->
