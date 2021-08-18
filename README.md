@@ -40,7 +40,7 @@ You can start creating the American Sign language symbols now.</p>
 <p>We then capture the image frame wise and crop it around the bounding box. This image is sent to the trained MobileNet or ResNet Model according to the argument selected, returning the predicted result.
 <p>We have used MobileNet and ResNet pre-trained models.</p>
 <p>MobileNet has an accuracy of 96% on the test set and ResNet has an accuracy of 93% on the test set. We have used a learning rate of 0.001 for both the models with SGD as Optimiser. The transforms used are - transforms.ColorJitter(brightness = 0.9, contrast = 0.9, saturation = 0.9, hue = 0.1).</p> 
-<p>In real-time these models were able to detect 19 signs from 26 alphabet signs. One of the reasons for low accuracy of CNNs in real time was the low number of training samples with less variety in training images.
+<p>In real-time these models were able to detect 19 signs from 26 alphabet signs. One of the reasons for low accuracy in real-time is the CNN models overfitting the current dataset due to the low number of training samples with less variety in training images.
 Next Steps - Collect more data with different backgrounds and different people to create a more robust dataset.</p>
 
  
