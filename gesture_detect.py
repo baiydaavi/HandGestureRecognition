@@ -22,8 +22,9 @@ class handDetector():
         self.trackCon = trackCon
         self.model = model_used
         self.mpHands = mp.solutions.hands
+        self.modelComplexity=1
         self.hands = self.mpHands.Hands(self.mode, self.maxHands,
-                                        self.detectionCon, self.trackCon)
+                                        self.detectionCon, self.trackCon, self.modelComplexity)
         self.mpDraw = mp.solutions.drawing_utils
 
         self.labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
@@ -36,18 +37,6 @@ class handDetector():
             self.model.load_state_dict(torch.load(
                 'trained_landmarks_models/Normalized_DNN_landmarks_model.pth'))
 
-        # CNN model
-        elif model_used == "mobilenet":
-            print("Came here")
-            self.model = CNN(backbone="mobilenet_v2")
-            self.model = torch.load(
-                'trained_cnn_models/sl_recognition_5_0.247_0.925_mobilenet.pth',
-                map_location='cpu')
-        elif model_used == "resnet":
-            self.model = CNN(backbone="resnet50")
-            self.model = torch.load(
-                'trained_cnn_models/sl_recognition_25_0.15_0.952_resnet.pth',
-                map_location='cpu')
 
         self.model.eval()
 
@@ -72,38 +61,6 @@ class handDetector():
 
         return img
 
-    def findBox(self, img, draw=True):
-        """
-        Find bounding box around the hand
-        :param img: image containing hand
-        :param draw: True if bounding box is drawn
-        :return: input image with or without bounding box
-        """
-        if self.results.multi_hand_landmarks:
-            xList = []
-            yList = []
-            myHand = self.results.multi_hand_landmarks[0]
-            for id, lm in enumerate(myHand.landmark):
-                # print(id, lm)
-                h, w, c = img.shape
-                cx, cy = int(lm.x * w), int(lm.y * h)
-                xList.append(cx)
-                yList.append(cy)
-                # print(id, cx, cy)
-                # if draw:
-                #     cv2.circle(img, (cx, cy), 5, (255, 0, 255), cv2.FILLED)
-
-            xmin, xmax = min(xList), max(xList)
-            ymin, ymax = min(yList), max(yList)
-
-            self.cropped_image = img[ymin - 80:ymax + 80, xmin - 80:xmax + 80]
-
-            if draw:
-                cv2.rectangle(img, (xmin - 80, ymin - 80), (xmax + 80,
-                                                            ymax + 80),
-                              (0, 255, 0), 2)
-
-        return img
 
     def detect_gesture(self, model="landmark"):
         """
@@ -115,56 +72,34 @@ class handDetector():
             gesture = 'nothing'
 
         else:
-            if (model == "landmark"):
-                lm_array = []
-                myHand = self.results.multi_hand_landmarks[0]
+            lm_array = []
+            myHand = self.results.multi_hand_landmarks[0]
 
-                # get landmark points relative to landmark 0
-                for id, lm in enumerate(myHand.landmark):
-                    if id != 0:
-                        pass
-                    else:
-                        ref_x = lm.x
-                        ref_y = lm.y
+            # get landmark points relative to landmark 0
+            for id, lm in enumerate(myHand.landmark):
+                if id != 0:
+                    pass
+                else:
+                    ref_x = lm.x
+                    ref_y = lm.y
 
-                    lm_array.append(lm.x - ref_x)
-                    lm_array.append(lm.y - ref_y)
+                lm_array.append(lm.x - ref_x)
+                lm_array.append(lm.y - ref_y)
 
-                lm_array = np.array(lm_array)
+            lm_array = np.array(lm_array)
 
-                # scale the detected landmark points in x and y direction
-                lm_array[0::2] = (lm_array[0::2] - np.min(lm_array[0::2])) / (
-                        np.max(
-                            lm_array[0::2]) - np.min(lm_array[0::2]))
-                lm_array[1::2] = (lm_array[1::2] - np.min(lm_array[1::2])) / (
-                        np.max(
-                            lm_array[1::2]) - np.min(lm_array[1::2]))
+            # scale the detected landmark points in x and y direction
+            lm_array[0::2] = (lm_array[0::2] - np.min(lm_array[0::2])) / (
+                    np.max(
+                        lm_array[0::2]) - np.min(lm_array[0::2]))
+            lm_array[1::2] = (lm_array[1::2] - np.min(lm_array[1::2])) / (
+                    np.max(
+                        lm_array[1::2]) - np.min(lm_array[1::2]))
 
-                # predict gesture using deep network landmark model
-                output = self.model(
-                    torch.tensor(lm_array).type(torch.FloatTensor))
-                gesture_id = np.argmax(output.detach().numpy())
-
-            elif (model == "mobilenet" or model == "resnet"):
-                print("shape of cropped image ", self.cropped_image.shape)
-                _image = np.array(self.cropped_image)
-                imgRGB = cv2.cvtColor(_image, cv2.COLOR_BGR2RGB)
-                im = Image.fromarray(imgRGB)
-                # im.save("output/video_output{}.jpg".format(str(time.time()
-                # * 100))) SAVE IMAGES TO TEST
-
-                # resize the image and convert to tensor
-                train_transforms = transforms.Compose(
-                    [transforms.Resize((224, 224)), transforms.ToTensor(), ])
-                imgRGB = transforms.ToPILImage()(imgRGB)
-                image = train_transforms(imgRGB)
-
-                # add a dimension to image for batch
-                image = image[None, :]
-                # image = image.permute(0, 3, 1, 2)
-                # image = image.type(torch.FloatTensor)
-                output = self.model(image)
-                gesture_id = np.argmax(output.detach().numpy())
+            # predict gesture using deep network landmark model
+            output = self.model(
+                torch.tensor(lm_array).type(torch.FloatTensor))
+            gesture_id = np.argmax(output.detach().numpy())
 
             # predict gesture using logistic regression landmark model
             # gesture_id = self.model.predict(lm_array.reshape(1,-1))[0]
@@ -190,11 +125,7 @@ def run_hand_gesture_recognition(train_model):
         success, img = cap.read()
 
         # find hand landmarks
-        if (train_model == "landmark"):
-            img = detector.findHands(img)
-        else:
-            img = detector.findHands(img, draw=False)
-            img = detector.findBox(img)
+        img = detector.findHands(img)
 
         # find gesture
         # params: model="landmark" / model="mobilenet" / model = "resnet"
@@ -228,7 +159,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-m', '--model',
-                        choices=['landmark', 'mobilenet', 'resnet'],
+                        choices=['landmark'],
                         default='landmark')
 
     args = parser.parse_args()
