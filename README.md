@@ -11,7 +11,7 @@
         <li><a href="#cnn-model">CNN Model</a></li>
       </ul>
     </li>
-    <li><a href="#requirements">Requirements</a></li>
+<!--     <li><a href="#requirements">Requirements</a></li> -->
     <li><a href="#organization">Organization</a></li>
     <li><a href="#execution">Execution</a></li>
     <li><a href="#contributing">Contributing</a></li>
